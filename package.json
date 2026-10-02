@@ -1,0 +1,17 @@
+{
+  "name": "sans",
+  "version": "1.0.0",
+  "description": "Sans: Telegram movie & series guide bot and mini app",
+  "scripts": {
+    "test": "bash test/run.sh",
+    "dev": "wrangler dev"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@fontsource-variable/vazirmatn": "^5.3.0",
+    "wrangler": "^4.147.0"
+  },
+  "private": true,
+  "type": "module"
+}

@@ -1,0 +1,99 @@
+name: test and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  WRANGLER_SEND_METRICS: 'false'
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Local end-to-end tests
+        run: npm test 2>&1 | tee test-report.txt
+      - name: Save report
+        if: always()
+        run: bash scripts/save-report.sh test test-report.txt
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      TMDB_KEY: ${{ secrets.TMDB_KEY }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      PUBLIC_URL: https://sans.ctrjmc.xyz
+      CHANNEL: '@parsv2r'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Check secrets
+        id: ready
+        run: |
+          missing=""
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing="$missing CF_API_TOKEN"
+          [ -n "$TMDB_KEY" ] || missing="$missing TMDB_KEY"
+          [ -n "$BOT_TOKEN" ] || missing="$missing BOT_TOKEN"
+          if [ -n "$missing" ]; then
+            echo "Missing repo secrets:$missing — skipping deploy" | tee deploy-report.txt
+            echo "go=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy
+        if: steps.ready.outputs.go == 'yes'
+        run: |
+          set -o pipefail
+          {
+            set -e
+            acct=$(curl -sf -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" https://api.cloudflare.com/client/v4/accounts | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);console.log(j.result[0].id)})')
+            export CLOUDFLARE_ACCOUNT_ID="$acct"
+            echo "account resolved"
+
+            db=$(npx wrangler d1 list --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);const d=j.find(x=>x.name==="sans");console.log(d?d.uuid:"")})')
+            if [ -z "$db" ]; then
+              npx wrangler d1 create sans
+              db=$(npx wrangler d1 list --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);console.log(j.find(x=>x.name==="sans").uuid)})')
+            fi
+            echo "d1 database: $db"
+            sed -i "s/REPLACED_AT_DEPLOY/$db/" wrangler.toml
+            npx wrangler d1 execute sans --remote --file=schema.sql
+
+            botname=$(curl -sf "https://api.telegram.org/bot$BOT_TOKEN/getMe" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).result.username))')
+            echo "bot: @$botname"
+            whs=$(printf '%s' "$BOT_TOKEN:sans-webhook" | sha256sum | cut -c1-48)
+            echo "::add-mask::$whs"
+
+            npx wrangler deploy --var "BOT_USERNAME:$botname" --var "CHANNEL:$CHANNEL" --var "PUBLIC_URL:$PUBLIC_URL"
+            node -e 'require("fs").writeFileSync("/tmp/sec.json", JSON.stringify({TMDB_KEY:process.env.TMDB_KEY,BOT_TOKEN:process.env.BOT_TOKEN,WEBHOOK_SECRET:process.argv[1]}))' "$whs"
+            npx wrangler secret bulk /tmp/sec.json
+            rm -f /tmp/sec.json
+
+            WEBHOOK_SECRET="$whs" node scripts/bot-setup.mjs
+            echo
+            node scripts/live-check.mjs
+          } 2>&1 | tee deploy-report.txt
+
+      - name: Save report
+        if: always()
+        run: bash scripts/save-report.sh deploy deploy-report.txt

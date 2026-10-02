@@ -1,0 +1,29 @@
+name = "sans"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+workers_dev = false
+
+routes = [{ pattern = "sans.ctrjmc.xyz", custom_domain = true }]
+
+[triggers]
+crons = ["7 * * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sans"
+database_id = "REPLACED_AT_DEPLOY"
+
+[vars]
+PUBLIC_URL = "https://sans.ctrjmc.xyz"
+CHANNEL = "@parsv2r"
+BOT_USERNAME = "SansGuideBot"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
+
+[[rules]]
+type = "Data"
+globs = ["**/*.woff2"]
+fallthrough = true

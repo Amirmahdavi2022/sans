@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#0c0b0a">
+<meta name="color-scheme" content="dark">
+<title>Sans · سانس</title>
+<script src="/tg.js"></script>
+<style>
+@font-face{font-family:Vazirmatn;font-style:normal;font-weight:100 900;font-display:swap;src:url(/font/fa.woff2) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:Vazirmatn;font-style:normal;font-weight:100 900;font-display:swap;src:url(/font/latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{
+  --bg:#0c0b0a;--bg-2:#14120f;--surface:#1b1814;--surface-2:#24201b;--line:rgba(255,240,220,.08);--line-2:rgba(255,240,220,.14);
+  --text:#f5efe6;--muted:#a69d90;--faint:#6f685e;--amber:#ffb547;--amber-2:#ffcf85;--amber-ink:#1d1305;--red:#ff6b5e;--green:#5ed39a;
+  --r-sm:10px;--r:14px;--r-lg:20px;--gap:16px;
+  --ease-out:cubic-bezier(0.23,1,0.32,1);--ease-in-out:cubic-bezier(0.77,0,0.175,1);--ease-drawer:cubic-bezier(0.32,0.72,0,1);
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
+  --tabbar:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior:none;background:var(--bg)}
+body{font-family:Vazirmatn,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;font-size:15px;line-height:1.6;overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+button,a,[role=button]{touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit;font-size:16px;color:var(--text)}
+img{display:block}
+.press{transition:transform 140ms var(--ease-out)}
+.press:active{transform:scale(.97)}
+.fade{opacity:0;transition:opacity 260ms ease}
+.fade.on{opacity:1}
+
+/* ---------- shell ---------- */
+#view{padding-bottom:calc(var(--tabbar) + var(--safe-b) + 24px);min-height:100dvh}
+.top{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + var(--safe-t)) var(--gap) 8px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,var(--amber-2),var(--amber) 55%,#e08a1e);display:grid;place-items:center;color:var(--amber-ink);box-shadow:0 6px 18px rgba(255,181,71,.25)}
+.brand-name{font-size:21px;font-weight:800;letter-spacing:-.2px}
+.brand-name small{display:block;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.3px;margin-top:-4px}
+.chip-btn{height:34px;padding:0 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--text);display:inline-flex;align-items:center;gap:6px}
+.h-title{font-size:24px;font-weight:800;padding:calc(18px + var(--safe-t)) var(--gap) 6px;letter-spacing:-.3px}
+.h-sub{color:var(--muted);font-size:13px;padding:0 var(--gap) 12px}
+
+.tabbar{position:fixed;inset-inline:0;bottom:0;z-index:20;padding:6px 10px calc(6px + var(--safe-b));background:rgba(12,11,10,.86);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--faint);font-size:11px;font-weight:600;border-radius:12px}
+.tab svg{width:24px;height:24px}
+.tab.on{color:var(--amber)}
+
+/* ---------- hero ---------- */
+.hero{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:6px var(--gap) 4px;scrollbar-width:none}
+.hero::-webkit-scrollbar,.row-list::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:16/10;background:var(--surface);text-align:start}
+.slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slide::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(12,11,10,.95) 4%,rgba(12,11,10,.35) 48%,rgba(12,11,10,0) 75%)}
+.slide-body{position:absolute;inset-inline:16px;bottom:14px;z-index:1}
+.slide-kicker{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.4px;display:flex;gap:6px;align-items:center}
+.slide-title{font-size:22px;font-weight:800;line-height:1.3;margin-top:2px;text-shadow:0 2px 12px rgba(0,0,0,.4);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.slide-meta{color:#d8cfc2;font-size:12.5px;margin-top:4px;display:flex;gap:10px;align-items:center}
+.dots{display:flex;justify-content:center;gap:6px;padding:8px 0 4px}
+.dots i{width:6px;height:6px;border-radius:99px;background:var(--line-2);transition:width 220ms var(--ease-out),background 220ms ease}
+.dots i.on{width:18px;background:var(--amber)}
+
+.star{color:var(--amber);display:inline-flex;align-items:center;gap:3px;font-weight:700}
+.star svg{width:13px;height:13px}
+
+.promo{margin:14px var(--gap) 4px;border-radius:var(--r-lg);padding:16px;display:flex;align-items:center;gap:14px;background:radial-gradient(120% 140% at 100% 0%,rgba(255,181,71,.28),rgba(255,181,71,0) 55%),var(--surface);border:1px solid rgba(255,181,71,.22);text-align:start;width:calc(100% - 2*var(--gap))}
+.promo-ico{width:46px;height:46px;flex:none;border-radius:14px;background:var(--amber);color:var(--amber-ink);display:grid;place-items:center;font-size:24px}
+.promo b{display:block;font-size:16px}
+.promo span{color:var(--muted);font-size:12.5px}
+.promo .go{margin-inline-start:auto;color:var(--amber);flex:none}
+
+/* ---------- rows & cards ---------- */
+.row{margin-top:22px}
+.row-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 var(--gap) 10px}
+.row-head h3{font-size:17px;font-weight:800}
+.row-list{display:flex;gap:10px;overflow-x:auto;padding:0 var(--gap) 4px;scroll-snap-type:x proximity;scroll-padding-inline:var(--gap);scrollbar-width:none}
+.card{flex:0 0 112px;scroll-snap-align:start;text-align:start}
+.poster{position:relative;aspect-ratio:2/3;border-radius:var(--r);overflow:hidden;background:var(--surface);box-shadow:0 0 0 1px var(--line) inset}
+.poster img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;top:6px;inset-inline-start:6px;background:rgba(12,11,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:8px;padding:1px 6px;font-size:11px;font-weight:700;color:var(--amber);display:flex;gap:3px;align-items:center}
+.badge svg{width:10px;height:10px}
+.kind{position:absolute;bottom:6px;inset-inline-end:6px;background:rgba(12,11,10,.7);border-radius:6px;padding:0 5px;font-size:10px;color:#e8e0d4}
+.card-t{font-size:13px;font-weight:600;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-y{font-size:11.5px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 10px;padding:4px var(--gap)}
+.grid .card{flex:none;width:auto}
+
+.sk{background:linear-gradient(90deg,var(--surface) 0%,var(--surface-2) 50%,var(--surface) 100%);background-size:200% 100%;animation:sk 1.2s linear infinite}
+@keyframes sk{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* ---------- detail sheet ---------- */
+.sheet{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;overscroll-behavior:contain;transform:translateY(100%);transition:transform 460ms var(--ease-drawer);will-change:transform}
+.sheet.open{transform:translateY(0)}
+.d-hero{position:relative;height:300px}
+.d-hero img{width:100%;height:100%;object-fit:cover}
+.d-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 2%,rgba(12,11,10,.55) 45%,rgba(12,11,10,.15) 100%)}
+.d-close{position:absolute;top:calc(12px + var(--safe-t));inset-inline-end:12px;z-index:2;width:38px;height:38px;border-radius:99px;background:rgba(12,11,10,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:grid;place-items:center}
+.d-head{display:flex;gap:14px;padding:0 var(--gap);margin-top:-118px;position:relative;z-index:1;align-items:flex-end}
+.d-poster{width:108px;flex:none;border-radius:var(--r);overflow:hidden;aspect-ratio:2/3;background:var(--surface);box-shadow:0 14px 40px rgba(0,0,0,.55),0 0 0 1px var(--line-2)}
+.d-poster img{width:100%;height:100%;object-fit:cover}
+.d-tt{min-width:0;padding-bottom:4px}
+.d-title{font-size:22px;font-weight:800;line-height:1.3}
+.d-orig{color:var(--muted);font-size:12.5px;margin-top:2px}
+.d-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-size:11.5px;padding:2px 9px;border-radius:99px;background:var(--surface);border:1px solid var(--line);color:#ddd4c7}
+.d-score{display:flex;align-items:center;gap:14px;padding:16px var(--gap) 4px}
+.score-big{display:flex;align-items:center;gap:6px;font-size:26px;font-weight:800;color:var(--amber)}
+.score-big svg{width:22px;height:22px}
+.score-big small{font-size:12px;color:var(--muted);font-weight:500;white-space:nowrap}
+.d-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px var(--gap)}
+.act{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);font-size:11.5px;font-weight:600;color:#e5ddd1;transition:transform 140ms var(--ease-out),background 200ms ease,border-color 200ms ease,color 200ms ease}
+.act:active{transform:scale(.96)}
+.act svg{width:22px;height:22px}
+.act.on{background:rgba(255,181,71,.14);border-color:rgba(255,181,71,.45);color:var(--amber)}
+.act[disabled]{opacity:.4}
+.sec{padding:10px var(--gap) 6px}
+.sec h4{font-size:16px;font-weight:800;margin-bottom:8px}
+.overview{color:#ddd4c7;font-size:14.5px;line-height:1.95}
+.note{font-size:11.5px;color:var(--faint);margin-top:6px}
+.cast{display:flex;gap:12px;overflow-x:auto;padding:2px var(--gap) 4px;scrollbar-width:none}
+.cast::-webkit-scrollbar{display:none}
+.person{flex:0 0 70px;text-align:center}
+.person .ph{width:62px;height:62px;border-radius:99px;margin:0 auto;overflow:hidden;background:var(--surface);box-shadow:0 0 0 1px var(--line) inset}
+.person .ph img{width:100%;height:100%;object-fit:cover}
+.person b{display:block;font-size:11.5px;font-weight:600;margin-top:5px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.person span{display:block;font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.season{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:8px;overflow:hidden}
+.season-h{display:flex;width:100%;align-items:center;gap:12px;padding:10px 12px;text-align:start}
+.season-h b{font-size:14px}
+.season-h span{color:var(--muted);font-size:12px}
+.season-h .chev{margin-inline-start:auto;transition:transform 220ms var(--ease-out);color:var(--muted)}
+.season.open .chev{transform:rotate(180deg)}
+.eps{border-top:1px solid var(--line)}
+.ep{display:flex;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.ep:last-child{border-bottom:0}
+.ep .n{width:26px;flex:none;color:var(--amber);font-weight:800;font-size:13px;padding-top:1px}
+.ep b{font-size:13.5px;font-weight:600;display:block}
+.ep span{font-size:11.5px;color:var(--muted)}
+.next-ep{margin:0 var(--gap) 6px;padding:10px 12px;border-radius:var(--r);background:rgba(94,211,154,.08);border:1px solid rgba(94,211,154,.25);color:var(--green);font-size:13px;font-weight:600}
+.credit{padding:22px var(--gap) calc(26px + var(--safe-b));color:var(--faint);font-size:11px;text-align:center;line-height:1.7}
+.credit b{color:var(--muted)}
+
+/* ---------- tonight ---------- */
+.steps{display:flex;gap:6px;padding:4px var(--gap) 0}
+.steps i{flex:1;height:4px;border-radius:99px;background:var(--line-2);transition:background 220ms ease}
+.steps i.on{background:var(--amber)}
+.q{padding:22px var(--gap) 8px}
+.q h2{font-size:22px;font-weight:800;line-height:1.4}
+.q p{color:var(--muted);font-size:13px;margin-top:2px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px var(--gap)}
+.opt{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:16px 14px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);text-align:start;min-height:96px;transition:transform 140ms var(--ease-out),background 200ms ease,border-color 200ms ease}
+.opt:active{transform:scale(.97)}
+.opt .e{font-size:28px;line-height:1}
+.opt b{font-size:15px}
+.opt span{font-size:11.5px;color:var(--muted)}
+.opt.wide{grid-column:1/-1;flex-direction:row;align-items:center;min-height:64px}
+.link-back{color:var(--muted);font-size:13px;padding:10px var(--gap);display:inline-flex;align-items:center;gap:4px}
+
+.deck{position:relative;height:min(64dvh,560px);margin:10px var(--gap) 0}
+.dcard{position:absolute;inset:0;border-radius:24px;overflow:hidden;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 0 1px var(--line-2) inset;touch-action:pan-y;transform-origin:50% 100%}
+.dcard img{width:100%;height:100%;object-fit:cover}
+.dcard::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(12,11,10,.96) 8%,rgba(12,11,10,.4) 42%,rgba(12,11,10,0) 64%);pointer-events:none}
+.dcard.back{transform:scale(.94) translateY(14px);opacity:.6}
+.dcard-body{position:absolute;inset-inline:18px;bottom:18px;z-index:1;text-align:start}
+.dcard-body h3{font-size:24px;font-weight:800;line-height:1.3}
+.dcard-body .m{display:flex;gap:10px;align-items:center;color:#ddd4c7;font-size:13px;margin-top:4px}
+.dcard-body p{color:#cfc6b9;font-size:13px;margin-top:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;line-height:1.85}
+.stamp{position:absolute;top:22px;z-index:2;padding:4px 12px;border-radius:10px;border:2px solid;font-weight:800;font-size:15px;opacity:0;transform:rotate(-8deg)}
+.stamp.yes{inset-inline-start:18px;color:var(--green);border-color:var(--green)}
+.stamp.no{inset-inline-end:18px;color:var(--red);border-color:var(--red);transform:rotate(8deg)}
+.deck-btns{direction:ltr;display:flex;justify-content:center;align-items:center;gap:18px;padding:18px 0 4px}
+.round{width:58px;height:58px;border-radius:99px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line-2);transition:transform 140ms var(--ease-out)}
+.round:active{transform:scale(.93)}
+.round svg{width:26px;height:26px}
+.round.big{width:70px;height:70px;background:var(--amber);color:var(--amber-ink);border:0;box-shadow:0 10px 30px rgba(255,181,71,.3)}
+.round.small{width:48px;height:48px}
+.deck-hint{text-align:center;color:var(--faint);font-size:12px}
+.empty{padding:60px 30px;text-align:center;color:var(--muted)}
+.empty .e{font-size:44px;margin-bottom:10px}
+.empty b{display:block;color:var(--text);font-size:17px;margin-bottom:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:14px;background:var(--amber);color:var(--amber-ink);font-weight:800;font-size:15px;transition:transform 140ms var(--ease-out)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line-2)}
+
+/* ---------- search & list ---------- */
+.searchbar{position:sticky;top:0;z-index:5;padding:calc(12px + var(--safe-t)) var(--gap) 10px;background:linear-gradient(var(--bg) 80%,rgba(12,11,10,0))}
+.field{display:flex;align-items:center;gap:8px;height:48px;padding:0 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line-2)}
+.field svg{color:var(--muted);flex:none}
+.field input{flex:1;background:none;border:0;outline:0;height:100%;min-width:0}
+.field input::placeholder{color:var(--faint)}
+.seg{display:flex;gap:4px;margin:4px var(--gap) 12px;padding:4px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.seg button{flex:1;height:36px;border-radius:9px;font-size:13px;font-weight:700;color:var(--muted);transition:background 200ms ease,color 200ms ease}
+.seg button.on{background:var(--surface-2);color:var(--text);box-shadow:0 1px 0 var(--line-2) inset}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 var(--gap)}
+.chip{height:38px;padding:0 14px;border-radius:99px;background:var(--surface);border:1px solid var(--line);font-size:13.5px;font-weight:600;transition:transform 140ms var(--ease-out),background 200ms ease}
+.chip:active{transform:scale(.96)}
+.chip.on{background:var(--amber);color:var(--amber-ink);border-color:var(--amber)}
+.label{color:var(--muted);font-size:12.5px;font-weight:700;padding:14px var(--gap) 8px}
+
+/* ---------- gate & toast ---------- */
+.gate{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 28px;gap:14px}
+.gate .mark{width:76px;height:76px;border-radius:22px;font-size:38px}
+.gate h2{font-size:22px;font-weight:800}
+.gate p{color:var(--muted);font-size:14px;max-width:300px}
+.gate .btn{width:100%;max-width:300px}
+.toast{position:fixed;left:50%;bottom:calc(var(--tabbar) + var(--safe-b) + 14px);z-index:60;transform:translate(-50%,16px);opacity:0;background:var(--surface-2);border:1px solid var(--line-2);color:var(--text);padding:10px 16px;border-radius:12px;font-size:13.5px;font-weight:600;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.45);transition:opacity 260ms ease,transform 260ms var(--ease-out);pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (hover:hover) and (pointer:fine){
+  .card:hover .poster img{transform:scale(1.03)}
+  .poster img{transition:transform 300ms var(--ease-out)}
+  .chip:hover,.opt:hover,.act:hover{background:var(--surface-2)}
+}
+@media (prefers-reduced-motion:reduce){
+  .sheet{transition:opacity 200ms ease;transform:none;opacity:0;pointer-events:none}
+  .sheet.open{opacity:1;pointer-events:auto}
+  .sk{animation:none}
+  .toast{transition:opacity 200ms ease;transform:translate(-50%,0)}
+}
+</style>
+</head>
+<body>
+<div id="view"></div>
+<nav class="tabbar" id="tabbar" hidden></nav>
+<div class="sheet" id="sheet" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(() => {
+'use strict';
+const tg = window.Telegram && window.Telegram.WebApp;
+const initData = (tg && tg.initData) || '';
+const DEV = new URLSearchParams(location.search).get('dev');
+
+// ---------- i18n ----------
+const I = {
+  fa: {
+    sub: 'راهنمای فیلم و سریال', home: 'خانه', tonight: 'امشب چی؟', search: 'جستجو', list: 'لیست من',
+    trending: 'داغِ امروز', now: 'تازه در سینما', onair: 'سریال‌های در حال پخش', popular: 'فیلم‌های محبوب', top: 'برترین فیلم‌ها', toptv: 'برترین سریال‌ها',
+    trendKick: 'ترند امروز', promoT: 'امشب چی ببینم؟', promoS: 'سه تا سؤال، یه پیشنهاد درست‌وحسابی',
+    movie: 'فیلم', tv: 'سریال', min: 'دقیقه', votes: 'رأی',
+    want: 'می‌خوام ببینم', seen: 'دیدم', trailer: 'تریلر', follow: 'خبرم کن', share: 'بفرست', following: 'خبرت می‌کنم',
+    story: 'داستان', cast: 'بازیگرها', seasons: 'فصل‌ها', similar: 'شبیه این', director: 'کارگردان', creator: 'سازنده',
+    episodes: 'قسمت', season: 'فصل', faMissing: 'خلاصه‌ی فارسی موجود نبود، متن انگلیسی اومده.',
+    nextEp: (s, e, d) => `قسمت بعدی: فصل ${s}، قسمت ${e} · ${d}`,
+    q1: 'امشب حوصله‌ی چی داری؟', q1s: 'فیلم یا سریال',
+    q2: 'حال‌وهوات چطوره؟', q2s: 'یکی رو انتخاب کن',
+    q3: 'چقدر وقت داری؟', q3s: 'بر اساس مدت زمان',
+    tMovie: 'فیلم', tMovieS: 'یه داستان کامل', tTv: 'سریال', tTvS: 'چند قسمت پشت هم',
+    mLaugh: 'بخندم', mThrill: 'هیجان', mLove: 'عاشقانه', mMind: 'ذهن‌درگیر', mFeel: 'یه چیز دلی', mFear: 'بترسم', mFamily: 'خانوادگی',
+    mLaughS: 'کمدی', mThrillS: 'اکشن و تریلر', mLoveS: 'رمانس', mMindS: 'علمی‌تخیلی و معمایی', mFeelS: 'درام', mFearS: 'ترسناک', mFamilyS: 'انیمیشن و خانواده',
+    short: 'کم', shortS: 'زیر یک ساعت و نیم', mid: 'معمولی', midS: 'فرقی نمی‌کنه', long: 'زیاد', longS: 'یه فیلم بلند و حسابی',
+    shortTv: 'قسمت‌های کوتاه', longTv: 'قسمت‌های بلند',
+    back: 'برگرد', again: 'از اول', swipeHint: 'به چپ بکش رد کن، به راست بکش بذار تو لیستت',
+    noMore: 'پیشنهاد دیگه‌ای نمونده', tryAgain: 'یه بار دیگه امتحان کن یا جواب‌ها رو عوض کن.',
+    searchPh: 'اسم فیلم یا سریال…', byGenre: 'بر اساس ژانر', noResult: 'چیزی پیدا نشد', noResultS: 'یه املای دیگه یا اسم انگلیسیش رو امتحان کن.',
+    lWant: 'می‌خوام ببینم', lSeen: 'دیدم', lFollow: 'دنبال می‌کنم',
+    emptyWant: 'هنوز چیزی اینجا نیست', emptyWantS: 'تو صفحه‌ی هر فیلم «می‌خوام ببینم» رو بزن تا اینجا جمع بشه.',
+    emptySeen: 'هنوز چیزی ثبت نکردی', emptySeenS: 'فیلم‌هایی که دیدی رو علامت بزن تا یادت بمونه.',
+    emptyFollow: 'سریالی دنبال نمی‌کنی', emptyFollowS: 'تو صفحه‌ی سریال «خبرم کن» رو بزن تا قسمت جدید اومد بهت پیام بدم.',
+    addedWant: 'رفت تو لیستت 🍿', addedSeen: 'ثبت شد ✅', removed: 'برداشته شد', followOn: 'قسمت جدید اومد خبرت می‌کنم 🔔', followOff: 'دیگه خبرت نمی‌کنم',
+    limit: 'به سقف لیست رسیدی', err: 'یه مشکلی پیش اومد، دوباره امتحان کن',
+    joinT: 'اول عضو کانال شو', joinS: (c) => `سانس رایگانه، فقط کافیه عضو کانال ${c} باشی.`, joinBtn: 'عضویت در کانال', joined: 'عضو شدم', notYet: 'هنوز عضو نشدی 🙂',
+    openTg: 'سانس رو از داخل تلگرام باز کن', openTgS: 'این صفحه فقط داخل بات تلگرام کار می‌کنه.',
+    credit: 'اطلاعات و تصاویر از TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.',
+    shareText: (t) => `🎬 «${t}» رو تو سانس ببین`,
+  },
+  en: {
+    sub: 'Movie & series guide', home: 'Home', tonight: 'Tonight', search: 'Search', list: 'My list',
+    trending: 'Trending today', now: 'In theaters', onair: 'Airing now', popular: 'Popular movies', top: 'Top rated movies', toptv: 'Top rated series',
+    trendKick: 'Trending', promoT: 'What should I watch tonight?', promoS: 'Three quick questions, one great pick',
+    movie: 'Movie', tv: 'Series', min: 'min', votes: 'votes',
+    want: 'Watchlist', seen: 'Seen it', trailer: 'Trailer', follow: 'Notify me', share: 'Share', following: 'Notifying',
+    story: 'Story', cast: 'Cast', seasons: 'Seasons', similar: 'More like this', director: 'Director', creator: 'Created by',
+    episodes: 'episodes', season: 'Season', faMissing: '',
+    nextEp: (s, e, d) => `Next: season ${s}, episode ${e} · ${d}`,
+    q1: 'What are you in the mood for?', q1s: 'Movie or series',
+    q2: 'How are you feeling?', q2s: 'Pick one',
+    q3: 'How much time do you have?', q3s: 'By running time',
+    tMovie: 'A movie', tMovieS: 'One complete story', tTv: 'A series', tTvS: 'A few episodes in a row',
+    mLaugh: 'Laugh', mThrill: 'Thrills', mLove: 'Romance', mMind: 'Mind-bending', mFeel: 'Something heartfelt', mFear: 'Get scared', mFamily: 'Family',
+    mLaughS: 'Comedy', mThrillS: 'Action & thriller', mLoveS: 'Love stories', mMindS: 'Sci-fi & mystery', mFeelS: 'Drama', mFearS: 'Horror', mFamilyS: 'Animation & family',
+    short: 'Not much', shortS: 'Under 1h40', mid: 'Any', midS: "Doesn't matter", long: 'Plenty', longS: 'A long, proper film',
+    shortTv: 'Short episodes', longTv: 'Long episodes',
+    back: 'Back', again: 'Start over', swipeHint: 'Swipe left to skip, right to save',
+    noMore: 'No more picks', tryAgain: 'Try again or change your answers.',
+    searchPh: 'Movie or series name…', byGenre: 'By genre', noResult: 'Nothing found', noResultS: 'Try another spelling.',
+    lWant: 'Watchlist', lSeen: 'Seen', lFollow: 'Following',
+    emptyWant: 'Nothing here yet', emptyWantS: 'Tap "Watchlist" on any title to save it here.',
+    emptySeen: 'Nothing marked yet', emptySeenS: "Mark what you've watched so you remember.",
+    emptyFollow: 'Not following any series', emptyFollowS: 'Tap "Notify me" on a series and I will message you when a new episode is out.',
+    addedWant: 'Added to your list 🍿', addedSeen: 'Marked as seen ✅', removed: 'Removed', followOn: "I'll tell you about new episodes 🔔", followOff: 'Alerts off',
+    limit: 'List limit reached', err: 'Something went wrong, try again',
+    joinT: 'Join the channel first', joinS: (c) => `Sans is free. You just need to be a member of ${c}.`, joinBtn: 'Join the channel', joined: 'I joined', notYet: "You haven't joined yet 🙂",
+    openTg: 'Open Sans inside Telegram', openTgS: 'This page only works inside the Telegram bot.',
+    credit: 'Data and images from TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.',
+    shareText: (t) => `🎬 Check out "${t}" on Sans`,
+  },
+};
+
+let lang = 'fa';
+try { const s = localStorage.getItem('sans.lang'); if (s === 'en' || s === 'fa') lang = s; } catch (e) {}
+const t = (k, ...a) => { const v = I[lang][k]; return typeof v === 'function' ? v(...a) : (v == null ? k : v); };
+const num = (n) => (n == null ? '' : Number(n).toLocaleString(lang === 'fa' ? 'fa-IR' : 'en-US'));
+const yr = (n) => (n == null ? '' : lang === 'fa' ? Number(n).toLocaleString('fa-IR', { useGrouping: false }) : String(n));
+const dec = (n) => (n == null ? '' : lang === 'fa' ? Number(n).toLocaleString('fa-IR', { maximumFractionDigits: 1 }) : Number(n).toFixed(1));
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const img = (p, size) => (p ? `/img/${size}${p}` : '');
+const fmtDate = (d) => { try { return new Date(d + 'T00:00:00Z').toLocaleDateString(lang === 'fa' ? 'fa-IR' : 'en-US', { month: 'long', day: 'numeric' }); } catch (e) { return d; } };
+
+// ---------- icons ----------
+const ic = {
+  star: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.5 1.2 6.4L12 17.3l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z"/></svg>',
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+  spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5z"/></svg>',
+  bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v13M7.5 7.5 12 3l4.5 4.5"/></svg>',
+  close: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  heart: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.3S3.5 15.2 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6.1-8.5 11.2-8.5 11.2z"/></svg>',
+  info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg>',
+  chev: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
+  globe: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>',
+  film: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 9.5h18M7.5 5v4.5M12 5v4.5M16.5 5v4.5"/></svg>',
+};
+
+// ---------- api ----------
+async function api(path, opts = {}) {
+  const sep = path.includes('?') ? '&' : '?';
+  const headers = { 'x-init-data': initData };
+  if (DEV) headers['x-dev-user'] = DEV;
+  if (opts.body) headers['content-type'] = 'application/json';
+  const r = await fetch(`/api${path}${sep}lang=${lang}`, { method: opts.body ? 'POST' : 'GET', headers, body: opts.body ? JSON.stringify(opts.body) : undefined });
+  let data = null;
+  try { data = await r.json(); } catch (e) {}
+  if (r.status === 403 && data && data.error === 'join') { state.me = { ...(state.me || {}), member: false, channel: data.channel, channelLink: data.channelLink }; renderGate(); throw new Error('join'); }
+  if (!r.ok) { const e = new Error((data && data.error) || 'http ' + r.status); e.status = r.status; e.data = data; throw e; }
+  return data;
+}
+
+const state = { me: null, tab: 'home', home: {}, list: null, scroll: {}, tonight: { step: 0, a: {} }, deck: [], searchQ: '', searchType: 'movie', genres: {}, listSeg: 'watch' };
+
+// ---------- haptics & toast ----------
+const hap = (k) => { try { if (!tg || !tg.HapticFeedback) return; if (k === 'sel') tg.HapticFeedback.selectionChanged(); else if (k === 'ok') tg.HapticFeedback.notificationOccurred('success'); else tg.HapticFeedback.impactOccurred(k || 'light'); } catch (e) {} };
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// Images fade in once decoded instead of popping.
+function wireImages(root) {
+  root.querySelectorAll('img.fade:not(.on)').forEach((im) => {
+    if (im.complete && im.naturalWidth) im.classList.add('on');
+    else { im.addEventListener('load', () => im.classList.add('on'), { once: true }); im.addEventListener('error', () => im.remove(), { once: true }); }
+  });
+}
+
+// ---------- pieces ----------
+const typeLabel = (ty) => (ty === 'tv' ? t('tv') : t('movie'));
+function cardHtml(c, opts = {}) {
+  return `<button class="card press" data-open="${c.type}/${c.id}">
+    <div class="poster">${c.poster ? `<img class="fade" loading="lazy" decoding="async" alt="" src="${img(c.poster, 'w342')}">` : ''}
+      ${c.rating ? `<span class="badge">${ic.star}${dec(c.rating)}</span>` : ''}
+      ${opts.kind ? `<span class="kind">${typeLabel(c.type)}</span>` : ''}</div>
+    <div class="card-t">${esc(c.title)}</div><div class="card-y">${c.year ? yr(c.year) : '&nbsp;'}</div></button>`;
+}
+function rowHtml(title, items, opts) {
+  if (!items || !items.length) return '';
+  return `<section class="row"><div class="row-head"><h3>${esc(title)}</h3></div><div class="row-list">${items.map((c) => cardHtml(c, opts)).join('')}</div></section>`;
+}
+function skelRow() {
+  return `<section class="row"><div class="row-head"><h3><span class="sk" style="display:block;width:120px;height:18px;border-radius:6px"></span></h3></div><div class="row-list">${Array.from({ length: 5 }).map(() => '<div class="card"><div class="poster sk"></div><div class="sk" style="height:12px;border-radius:5px;margin-top:8px;width:80%"></div></div>').join('')}</div></section>`;
+}
+function emptyHtml(e, title, sub, action) {
+  return `<div class="empty"><div class="e">${e}</div><b>${esc(title)}</b>${esc(sub)}${action ? `<div style="margin-top:18px">${action}</div>` : ''}</div>`;
+}
+
+// ---------- shell ----------
+const view = () => document.getElementById('view');
+function renderTabs() {
+  const bar = document.getElementById('tabbar');
+  const tabs = [['home', ic.home], ['tonight', ic.spark], ['search', ic.search], ['list', ic.list]];
+  bar.hidden = false;
+  bar.innerHTML = tabs.map(([k, i]) => `<button class="tab${state.tab === k ? ' on' : ''}" data-tab="${k}">${i}<span>${t(k)}</span></button>`).join('');
+}
+function setLangDir() {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+}
+function go(tab) {
+  if (state.tab === tab && tab !== 'tonight') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  state.scroll[state.tab] = window.scrollY;
+  state.tab = tab;
+  if (location.hash !== '#/' + (tab === 'home' ? '' : tab)) history.replaceState(null, '', '#/' + (tab === 'home' ? '' : tab));
+  renderTabs();
+  render();
+}
+function render() {
+  if (state.tab === 'home') renderHome();
+  else if (state.tab === 'tonight') renderTonight();
+  else if (state.tab === 'search') renderSearch();
+  else renderList();
+}
+function restoreScroll() { window.scrollTo(0, state.scroll[state.tab] || 0); }
+
+// ---------- home ----------
+async function renderHome() {
+  const v = view();
+  const head = `<header class="top"><div class="brand"><div class="brand-mark">${ic.film}</div><div class="brand-name">${lang === 'fa' ? 'سانس' : 'Sans'}<small>${t('sub')}</small></div></div>
+    <button class="chip-btn press" data-lang>${ic.globe}${lang === 'fa' ? 'EN' : 'فا'}</button></header>`;
+  const data = state.home[lang];
+  if (!data) {
+    v.innerHTML = head + `<div style="padding:6px var(--gap)"><div class="sk" style="aspect-ratio:16/10;border-radius:20px"></div></div>` + skelRow() + skelRow();
+    try { state.home[lang] = await api('/home'); } catch (e) { if (e.message !== 'join') v.innerHTML = head + emptyHtml('📡', t('err'), '', `<button class="btn" data-retry>${t('again')}</button>`); return; }
+    if (state.tab !== 'home') return;
+    return renderHome();
+  }
+  const hero = data.hero.map((c) => `<button class="slide" data-open="${c.type}/${c.id}">
+      <img class="fade" decoding="async" alt="" src="${img(c.backdrop, 'w780')}">
+      <div class="slide-body"><div class="slide-kicker">${ic.spark.replace('<svg', '<svg width="13" height="13"')} ${t('trendKick')} · ${typeLabel(c.type)}</div>
+      <div class="slide-title">${esc(c.title)}</div>
+      <div class="slide-meta">${c.rating ? `<span class="star">${ic.star}${dec(c.rating)}</span>` : ''}${c.year ? `<span>${yr(c.year)}</span>` : ''}</div></div></button>`).join('');
+  const titles = { trending: t('trending'), now: t('now'), onair: t('onair'), popular: t('popular'), top: t('top'), toptv: t('toptv') };
+  v.innerHTML = head
+    + `<div class="hero" id="hero">${hero}</div><div class="dots" id="dots">${data.hero.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>`
+    + `<button class="promo press" data-tab="tonight"><div class="promo-ico">🍿</div><div><b>${t('promoT')}</b><span>${t('promoS')}</span></div><span class="go">${ic.arrow}</span></button>`
+    + data.rows.map((r) => rowHtml(titles[r.key], r.items, { kind: r.key === 'trending' })).join('');
+  if (lang === 'en') v.querySelectorAll('.promo .go svg').forEach((s) => (s.style.transform = 'scaleX(-1)'));
+  wireImages(v);
+  const heroEl = document.getElementById('hero');
+  const dots = [...document.querySelectorAll('#dots i')];
+  const io = new IntersectionObserver((ents) => ents.forEach((en) => { if (en.isIntersecting) { const i = [...heroEl.children].indexOf(en.target); dots.forEach((d, j) => d.classList.toggle('on', i === j)); } }), { root: heroEl, threshold: 0.6 });
+  [...heroEl.children].forEach((s) => io.observe(s));
+  restoreScroll();
+}
+
+// ---------- detail sheet ----------
+let detailToken = 0;
+async function openDetail(type, id) {
+  const sheet = document.getElementById('sheet');
+  const my = ++detailToken;
+  sheet.scrollTop = 0;
+  sheet.innerHTML = `<div class="d-hero sk"></div><div class="d-head"><div class="d-poster sk"></div><div class="d-tt" style="flex:1"><div class="sk" style="height:22px;border-radius:6px;width:70%"></div><div class="sk" style="height:12px;border-radius:6px;width:40%;margin-top:10px"></div></div></div>`;
+  sheet.setAttribute('aria-hidden', 'false');
+  requestAnimationFrame(() => sheet.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+  if (tg && tg.BackButton) { tg.BackButton.show(); }
+  let d;
+  try { d = await api(`/title/${type}/${id}`); } catch (e) { if (my === detailToken && e.message !== 'join') { sheet.innerHTML = `<button class="d-close press" data-close style="position:fixed">${ic.close}</button>` + emptyHtml('📡', t('err'), ''); } return; }
+  if (my !== detailToken) return;
+  sheet.innerHTML = detailHtml(d);
+  sheet._d = d;
+  wireImages(sheet);
+}
+function closeDetail() {
+  const sheet = document.getElementById('sheet');
+  if (!sheet.classList.contains('open')) return false;
+  detailToken++;
+  sheet.classList.remove('open');
+  sheet.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (tg && tg.BackButton) tg.BackButton.hide();
+  if (location.hash.startsWith('#/t/')) history.replaceState(null, '', '#/' + (state.tab === 'home' ? '' : state.tab));
+  return true;
+}
+function actHtml(key, icon, label, on, extra = '') {
+  return `<button class="act${on ? ' on' : ''}" data-act="${key}" ${extra}>${icon}<span>${label}</span></button>`;
+}
+function detailHtml(d) {
+  const meta = [typeLabel(d.type), d.year ? (d.endYear && d.endYear !== d.year ? `${yr(d.year)}–${yr(d.endYear)}` : yr(d.year)) : null, d.runtime ? `${num(d.runtime)} ${t('min')}` : null].filter(Boolean);
+  const people = d.directors && d.directors.length ? `<div class="note" style="margin-top:10px;color:var(--muted)">${d.type === 'tv' ? t('creator') : t('director')}: <b style="color:var(--text);font-weight:600">${esc(d.directors.slice(0, 2).join('، '))}</b></div>` : '';
+  return `<div class="d-hero">${d.backdrop ? `<img class="fade" decoding="async" alt="" src="${img(d.backdrop, 'w1280')}">` : ''}<button class="d-close press" data-close aria-label="close">${ic.close}</button></div>
+  <div class="d-head"><div class="d-poster">${d.poster ? `<img class="fade" alt="" src="${img(d.poster, 'w342')}">` : ''}</div>
+    <div class="d-tt"><h1 class="d-title">${esc(d.title)}</h1>${d.original && d.original !== d.title ? `<div class="d-orig">${esc(d.original)}</div>` : ''}
+    <div class="d-meta">${meta.map((m) => `<span class="pill">${m}</span>`).join('')}${d.genres.slice(0, 2).map((g) => `<span class="pill">${esc(g)}</span>`).join('')}</div></div></div>
+  ${d.rating ? `<div class="d-score"><div class="score-big">${ic.star}${dec(d.rating)}<small>/ ${num(10)}</small></div><div style="color:var(--muted);font-size:12px;white-space:nowrap">${num(d.votes)} ${t('votes')}</div></div>` : ''}
+  <div class="d-actions">
+    ${actHtml('watch', d.mine.watch ? ic.check : ic.plus, t('want'), d.mine.watch)}
+    ${actHtml('seen', ic.check, t('seen'), d.mine.seen)}
+    ${d.type === 'tv' ? actHtml('follow', ic.bell, d.mine.follow ? t('following') : t('follow'), d.mine.follow) : actHtml('trailer', ic.play, t('trailer'), false, d.trailer ? '' : 'disabled')}
+    ${actHtml('share', ic.share, t('share'), false)}
+  </div>
+  ${d.type === 'tv' && d.trailer ? `<div style="padding:0 var(--gap) 6px"><button class="btn ghost" style="width:100%;height:44px" data-act="trailer">${ic.play.replace('<svg', '<svg width="18" height="18"')}${t('trailer')}</button></div>` : ''}
+  ${d.nextEpisode ? `<div class="next-ep">📅 ${t('nextEp', num(d.nextEpisode.season), num(d.nextEpisode.episode), fmtDate(d.nextEpisode.date))}</div>` : ''}
+  ${d.overview ? `<div class="sec"><h4>${t('story')}</h4>${d.tagline ? `<div style="color:var(--amber-2);font-size:13.5px;margin-bottom:6px;font-weight:600">${esc(d.tagline)}</div>` : ''}<p class="overview" dir="${d.overviewLang === 'en' ? 'ltr' : 'auto'}">${esc(d.overview)}</p>${d.overviewLang === 'en' && lang === 'fa' ? `<div class="note">${t('faMissing')}</div>` : ''}${people}</div>` : (people ? `<div class="sec">${people}</div>` : '')}
+  ${d.cast.length ? `<div class="sec"><h4>${t('cast')}</h4></div><div class="cast">${d.cast.map((p) => `<div class="person"><div class="ph">${p.photo ? `<img class="fade" loading="lazy" alt="" src="${img(p.photo, 'w185')}">` : ''}</div><b>${esc(p.name)}</b><span>${esc(p.role)}</span></div>`).join('')}</div>` : ''}
+  ${d.seasons.length ? `<div class="sec"><h4>${t('seasons')}</h4>${d.seasons.map((s) => `<div class="season" data-season="${s.n}"><button class="season-h" data-season-toggle="${s.n}"><b>${t('season')} ${num(s.n)}</b><span>${num(s.episodes)} ${t('episodes')}${s.year ? ' · ' + yr(s.year) : ''}</span><span class="chev">${ic.chev}</span></button></div>`).join('')}</div>` : ''}
+  ${d.similar.length ? rowHtml(t('similar'), d.similar) : ''}
+  <div class="credit"><b>${lang === 'fa' ? 'سانس' : 'Sans'}</b> · ${t('credit')}</div>`;
+}
+
+async function toggleSeason(el, n) {
+  const box = el.closest('.season');
+  const d = document.getElementById('sheet')._d;
+  if (box.classList.contains('open')) { box.classList.remove('open'); const e = box.querySelector('.eps'); if (e) e.remove(); return; }
+  box.classList.add('open');
+  const eps = document.createElement('div');
+  eps.className = 'eps';
+  eps.innerHTML = '<div class="ep"><div class="sk" style="height:14px;width:60%;border-radius:5px"></div></div>';
+  box.appendChild(eps);
+  try {
+    const s = await api(`/season/${d.id}/${n}`);
+    eps.innerHTML = s.episodes.map((e) => `<div class="ep"><div class="n">${num(e.n)}</div><div><b>${esc(e.name)}</b><span>${e.date ? fmtDate(e.date) : ''}${e.runtime ? ' · ' + num(e.runtime) + ' ' + t('min') : ''}${e.rating ? ' · ★ ' + dec(e.rating) : ''}</span></div></div>`).join('');
+  } catch (e) { eps.innerHTML = `<div class="ep"><span>${t('err')}</span></div>`; }
+}
+
+async function doAction(key, d, btn) {
+  hap('light');
+  if (key === 'trailer') { if (d.trailer) openLink(`https://www.youtube.com/watch?v=${d.trailer}`); return; }
+  if (key === 'share') {
+    const link = state.me && state.me.bot ? `https://t.me/${state.me.bot}?start=${d.type}_${d.id}` : location.origin;
+    const url = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(t('shareText', d.title))}`;
+    if (tg && tg.openTelegramLink) tg.openTelegramLink(url); else window.open(url, '_blank');
+    return;
+  }
+  if (key === 'follow') {
+    const on = !d.mine.follow;
+    d.mine.follow = on;
+    btn.classList.toggle('on', on); btn.querySelector('span').textContent = on ? t('following') : t('follow');
+    try { await api('/follow', { body: { id: d.id, on, title: d.title, poster: d.poster } }); toast(on ? t('followOn') : t('followOff')); if (on) hap('ok'); state.list = null; }
+    catch (e) { d.mine.follow = !on; btn.classList.toggle('on', !on); btn.querySelector('span').textContent = !on ? t('following') : t('follow'); toast(e.message === 'limit' ? t('limit') : t('err')); }
+    return;
+  }
+  await setListed(d, key, !d.mine[key]);
+  const sheet = document.getElementById('sheet');
+  const w = sheet.querySelector('[data-act="watch"]');
+  const s = sheet.querySelector('[data-act="seen"]');
+  if (w) { w.classList.toggle('on', d.mine.watch); w.querySelector('svg').outerHTML = d.mine.watch ? ic.check : ic.plus; }
+  if (s) s.classList.toggle('on', d.mine.seen);
+}
+async function setListed(c, kind, on) {
+  const prev = { ...(c.mine || {}) };
+  c.mine = c.mine || {};
+  c.mine[kind] = on;
+  if (kind === 'seen' && on) c.mine.watch = false;
+  try {
+    await api('/list', { body: { kind, on, type: c.type, id: c.id, title: c.title, poster: c.poster, year: c.year, rating: c.rating } });
+    if (on) { toast(kind === 'seen' ? t('addedSeen') : t('addedWant')); hap('ok'); } else toast(t('removed'));
+    state.list = null;
+    return true;
+  } catch (e) { c.mine = prev; toast(e.message === 'limit' ? t('limit') : t('err')); return false; }
+}
+function openLink(u) { if (tg && tg.openLink) tg.openLink(u); else window.open(u, '_blank'); }
+
+// ---------- tonight ----------
+function renderTonight() {
+  const v = view();
+  const s = state.tonight;
+  const steps = `<div class="steps">${[0, 1, 2].map((i) => `<i class="${i <= s.step ? 'on' : ''}"></i>`).join('')}</div>`;
+  if (s.step === 0) {
+    v.innerHTML = `<h1 class="h-title">${t('tonight')}</h1>${steps}<div class="q"><h2>${t('q1')}</h2><p>${t('q1s')}</p></div>
+      <div class="opts"><button class="opt wide" data-pick="type:movie"><span class="e">🎬</span><div><b>${t('tMovie')}</b><br><span>${t('tMovieS')}</span></div></button>
+      <button class="opt wide" data-pick="type:tv"><span class="e">📺</span><div><b>${t('tTv')}</b><br><span>${t('tTvS')}</span></div></button></div>`;
+  } else if (s.step === 1) {
+    const moods = [['laugh', '😂'], ['thrill', '💥'], ['mind', '🧠'], ['feel', '🥹'], ['love', '💘'], ['fear', '👻'], ['family', '🧸']];
+    const cap = (k) => k[0].toUpperCase() + k.slice(1);
+    v.innerHTML = `<h1 class="h-title">${t('tonight')}</h1>${steps}<div class="q"><h2>${t('q2')}</h2><p>${t('q2s')}</p></div>
+      <div class="opts">${moods.map(([k, e], i) => `<button class="opt${i === moods.length - 1 ? ' wide' : ''}" data-pick="mood:${k}"><span class="e">${e}</span><div><b>${t('m' + cap(k))}</b><br><span>${t('m' + cap(k) + 'S')}</span></div></button>`).join('')}</div>
+      <button class="link-back" data-tback>${t('back')}</button>`;
+  } else if (s.step === 2) {
+    const isTv = s.a.type === 'tv';
+    v.innerHTML = `<h1 class="h-title">${t('tonight')}</h1>${steps}<div class="q"><h2>${t('q3')}</h2><p>${t('q3s')}</p></div>
+      <div class="opts"><button class="opt wide" data-pick="time:short"><span class="e">⏱️</span><div><b>${isTv ? t('shortTv') : t('short')}</b><br><span>${isTv ? '≤ ' + num(30) + ' ' + t('min') : t('shortS')}</span></div></button>
+      <button class="opt wide" data-pick="time:mid"><span class="e">🛋️</span><div><b>${t('mid')}</b><br><span>${t('midS')}</span></div></button>
+      <button class="opt wide" data-pick="time:long"><span class="e">🌙</span><div><b>${isTv ? t('longTv') : t('long')}</b><br><span>${isTv ? '≥ ' + num(45) + ' ' + t('min') : t('longS')}</span></div></button></div>
+      <button class="link-back" data-tback>${t('back')}</button>`;
+  } else {
+    renderDeck();
+  }
+}
+async function loadDeck() {
+  const a = state.tonight.a;
+  const v = view();
+  v.innerHTML = `<h1 class="h-title">${t('tonight')}</h1><div class="deck"><div class="dcard sk"></div></div>`;
+  try {
+    const r = await api(`/discover?type=${a.type}&mood=${a.mood}&time=${a.time === 'mid' ? '' : a.time}&shuffle=1`);
+    state.deck = r.items;
+  } catch (e) { if (e.message !== 'join') v.innerHTML = emptyHtml('📡', t('err'), '', `<button class="btn" data-again>${t('again')}</button>`); return; }
+  if (state.tab === 'tonight') renderDeck();
+}
+function deckCardHtml(c, cls) {
+  return `<div class="dcard ${cls}" data-id="${c.id}"><img class="fade" alt="" decoding="async" src="${img(c.poster, 'w500')}">
+    <span class="stamp yes">${lang === 'fa' ? 'تو لیست' : 'SAVE'}</span><span class="stamp no">${lang === 'fa' ? 'بعدی' : 'NEXT'}</span>
+    <div class="dcard-body"><h3>${esc(c.title)}</h3><div class="m">${c.rating ? `<span class="star">${ic.star}${dec(c.rating)}</span>` : ''}${c.year ? `<span>${yr(c.year)}</span>` : ''}<span>${typeLabel(c.type)}</span></div>${c.overview ? `<p>${esc(c.overview)}</p>` : ''}</div></div>`;
+}
+function renderDeck() {
+  const v = view();
+  const deck = state.deck;
+  if (!deck.length) {
+    v.innerHTML = `<h1 class="h-title">${t('tonight')}</h1>` + emptyHtml('🎞️', t('noMore'), t('tryAgain'), `<button class="btn" data-again>${t('again')}</button>`);
+    return;
+  }
+  v.innerHTML = `<h1 class="h-title">${t('tonight')}</h1>
+    <div class="deck" id="deck">${deck[1] ? deckCardHtml(deck[1], 'back') : ''}${deckCardHtml(deck[0], 'front')}</div>
+    <div class="deck-btns"><button class="round" data-deck="no" aria-label="next">${ic.x}</button>
+      <button class="round big" data-deck="yes" aria-label="save">${ic.heart}</button>
+      <button class="round small" data-deck="info" aria-label="details">${ic.info}</button></div>
+    <div class="deck-hint">${t('swipeHint')}</div>
+    <div style="text-align:center;padding-top:6px"><button class="link-back" data-again>↺ ${t('again')}</button></div>`;
+  wireImages(v);
+  bindSwipe(v.querySelector('.dcard.front'));
+}
+function flyOut(card, dir) {
+  // In RTL "right" still means the physical right edge.
+  const x = dir === 'yes' ? 1 : -1;
+  card.style.transition = 'transform 320ms var(--ease-out), opacity 320ms ease';
+  card.style.transform = `translateX(${x * 130}%) rotate(${x * 16}deg)`;
+  card.style.opacity = '0';
+  const back = card.parentElement.querySelector('.dcard.back');
+  if (back) { back.style.transition = 'transform 320ms var(--ease-out), opacity 320ms ease'; back.style.transform = 'none'; back.style.opacity = '1'; }
+  const c = state.deck.shift();
+  if (dir === 'yes' && c) setListed({ ...c, mine: {} }, 'watch', true);
+  hap(dir === 'yes' ? 'medium' : 'light');
+  setTimeout(() => { if (state.tab === 'tonight') renderDeck(); }, 300);
+}
+function bindSwipe(card) {
+  if (!card) return;
+  let startX = 0, startY = 0, dx = 0, t0 = 0, dragging = false, pid = null, locked = null;
+  const yes = card.querySelector('.stamp.yes'), no = card.querySelector('.stamp.no');
+  card.addEventListener('pointerdown', (e) => {
+    if (dragging) return;
+    dragging = true; pid = e.pointerId; startX = e.clientX; startY = e.clientY; dx = 0; t0 = performance.now(); locked = null;
+    card.style.transition = 'none';
+  });
+  card.addEventListener('pointermove', (e) => {
+    if (!dragging || e.pointerId !== pid) return;
+    const mx = e.clientX - startX, my = e.clientY - startY;
+    if (locked === null && (Math.abs(mx) > 8 || Math.abs(my) > 8)) { locked = Math.abs(mx) > Math.abs(my) ? 'x' : 'y'; if (locked === 'x') card.setPointerCapture(pid); }
+    if (locked !== 'x') return;
+    dx = mx;
+    card.style.transform = `translateX(${dx}px) rotate(${dx / 22}deg)`;
+    const p = Math.min(1, Math.abs(dx) / 110);
+    yes.style.opacity = dx > 0 ? p : 0; no.style.opacity = dx < 0 ? p : 0;
+  });
+  const end = (e) => {
+    if (!dragging || (e && e.pointerId !== pid)) return;
+    dragging = false;
+    if (locked !== 'x') { card.style.transform = ''; return; }
+    const v = Math.abs(dx) / Math.max(1, performance.now() - t0);
+    if (Math.abs(dx) > 110 || v > 0.11 && Math.abs(dx) > 30) { flyOut(card, dx > 0 ? 'yes' : 'no'); return; }
+    card.style.transition = 'transform 380ms var(--ease-out)';
+    card.style.transform = '';
+    yes.style.opacity = 0; no.style.opacity = 0;
+  };
+  card.addEventListener('pointerup', end);
+  card.addEventListener('pointercancel', end);
+  card.addEventListener('click', () => { if (Math.abs(dx) < 6 && state.deck[0]) openDetail(state.deck[0].type, state.deck[0].id); });
+}
+
+// ---------- search ----------
+let searchTimer;
+async function renderSearch() {
+  const v = view();
+  v.innerHTML = `<div class="searchbar"><label class="field">${ic.search.replace('<svg', '<svg width="20" height="20"')}<input id="q" type="search" enterkeyhint="search" autocomplete="off" autocorrect="off" placeholder="${t('searchPh')}" value="${esc(state.searchQ)}"></label></div><div id="sres"></div>`;
+  const q = document.getElementById('q');
+  q.addEventListener('input', () => { state.searchQ = q.value; clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 380); });
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') { q.blur(); clearTimeout(searchTimer); runSearch(); } });
+  runSearch();
+}
+async function runSearch() {
+  const box = document.getElementById('sres');
+  if (!box) return;
+  const q = state.searchQ.trim();
+  if (!q) return renderGenres(box);
+  box.innerHTML = `<div class="grid">${Array.from({ length: 6 }).map(() => '<div class="card"><div class="poster sk"></div></div>').join('')}</div>`;
+  let r;
+  try { r = await api(`/search?q=${encodeURIComponent(q)}`); } catch (e) { if (e.message !== 'join') box.innerHTML = emptyHtml('📡', t('err'), ''); return; }
+  if (q !== state.searchQ.trim()) return;
+  box.innerHTML = r.items.length ? `<div class="grid">${r.items.map((c) => cardHtml(c, { kind: true })).join('')}</div>` : emptyHtml('🔎', t('noResult'), t('noResultS'));
+  wireImages(box);
+}
+async function renderGenres(box) {
+  const ty = state.searchType;
+  box.innerHTML = `<div class="seg"><button class="${ty === 'movie' ? 'on' : ''}" data-stype="movie">${t('movie')}</button><button class="${ty === 'tv' ? 'on' : ''}" data-stype="tv">${t('tv')}</button></div><div class="label">${t('byGenre')}</div><div class="chips" id="gchips"></div><div id="gres" style="margin-top:16px"></div>`;
+  if (!state.genres[lang]) { try { state.genres[lang] = await api('/genres'); } catch (e) { return; } }
+  const chips = document.getElementById('gchips');
+  if (!chips) return;
+  chips.innerHTML = state.genres[lang][ty].map((g) => `<button class="chip${state.genre === g.id ? ' on' : ''}" data-genre="${g.id}">${esc(g.name)}</button>`).join('');
+  if (state.genre) loadGenre(state.genre);
+}
+async function loadGenre(id) {
+  const res = document.getElementById('gres');
+  if (!res) return;
+  res.innerHTML = `<div class="grid">${Array.from({ length: 6 }).map(() => '<div class="card"><div class="poster sk"></div></div>').join('')}</div>`;
+  try {
+    const r = await api(`/discover?type=${state.searchType}&genre=${id}`);
+    if (state.genre !== id) return;
+    res.innerHTML = `<div class="grid">${r.items.map((c) => cardHtml(c)).join('')}</div>`;
+    wireImages(res);
+  } catch (e) { if (e.message !== 'join') res.innerHTML = emptyHtml('📡', t('err'), ''); }
+}
+
+// ---------- my list ----------
+async function renderList() {
+  const v = view();
+  const seg = state.listSeg;
+  const head = `<h1 class="h-title">${t('list')}</h1><div class="seg"><button class="${seg === 'watch' ? 'on' : ''}" data-lseg="watch">${t('lWant')}</button><button class="${seg === 'seen' ? 'on' : ''}" data-lseg="seen">${t('lSeen')}</button><button class="${seg === 'follow' ? 'on' : ''}" data-lseg="follow">${t('lFollow')}</button></div>`;
+  if (!state.list) {
+    v.innerHTML = head + `<div class="grid">${Array.from({ length: 6 }).map(() => '<div class="card"><div class="poster sk"></div></div>').join('')}</div>`;
+    try { state.list = await api('/list'); } catch (e) { if (e.message !== 'join') v.innerHTML = head + emptyHtml('📡', t('err'), ''); return; }
+    if (state.tab !== 'list') return;
+  }
+  const items = seg === 'follow' ? state.list.follows : state.list.items.filter((x) => x.kind === seg);
+  const empty = { watch: ['🍿', t('emptyWant'), t('emptyWantS')], seen: ['✅', t('emptySeen'), t('emptySeenS')], follow: ['🔔', t('emptyFollow'), t('emptyFollowS')] }[seg];
+  v.innerHTML = head + (items.length ? `<div class="grid">${items.map((c) => cardHtml(c, { kind: seg !== 'follow' })).join('')}</div>` : emptyHtml(empty[0], empty[1], empty[2], `<button class="btn ghost" data-tab="tonight">🍿 ${t('promoT')}</button>`));
+  wireImages(v);
+}
+
+// ---------- gate ----------
+function renderGate(outside) {
+  document.getElementById('tabbar').hidden = true;
+  closeDetail();
+  const v = view();
+  if (outside) {
+    v.innerHTML = `<div class="gate"><div class="brand-mark mark">🎬</div><h2>${t('openTg')}</h2><p>${t('openTgS')}</p></div>`;
+    return;
+  }
+  const ch = (state.me && state.me.channel) || '';
+  v.innerHTML = `<div class="gate"><div class="brand-mark mark">🎬</div><h2>${t('joinT')}</h2><p>${esc(t('joinS', ch))}</p>
+    <button class="btn" data-join>📢 ${t('joinBtn')}</button><button class="btn ghost" data-recheck>✅ ${t('joined')}</button></div>`;
+}
+
+// ---------- events ----------
+document.addEventListener('click', async (e) => {
+  const el = e.target.closest('button,[data-open]');
+  if (!el) return;
+  const ds = el.dataset;
+  if (ds.tab) { hap('sel'); if (document.getElementById('sheet').classList.contains('open')) closeDetail(); return go(ds.tab); }
+  if (ds.open) { const [ty, id] = ds.open.split('/'); hap('light'); history.replaceState(null, '', `#/t/${ty}/${id}`); return openDetail(ty, Number(id)); }
+  if (ds.close !== undefined) return closeDetail();
+  if (ds.act) { const d = document.getElementById('sheet')._d; if (d && !el.disabled) doAction(ds.act, d, el); return; }
+  if (ds.seasonToggle) return toggleSeason(el, Number(ds.seasonToggle));
+  if (ds.lang !== undefined) {
+    lang = lang === 'fa' ? 'en' : 'fa';
+    try { localStorage.setItem('sans.lang', lang); } catch (err) {}
+    setLangDir(); renderTabs(); render(); hap('sel');
+    api('/lang', { body: { lang } }).catch(() => {});
+    return;
+  }
+  if (ds.retry !== undefined) { state.home[lang] = null; return render(); }
+  if (ds.pick) {
+    const [k, val] = ds.pick.split(':');
+    state.tonight.a[k] = val;
+    state.tonight.step++;
+    hap('sel');
+    if (state.tonight.step === 3) return loadDeck();
+    window.scrollTo(0, 0);
+    return renderTonight();
+  }
+  if (ds.tback !== undefined) { state.tonight.step = Math.max(0, state.tonight.step - 1); return renderTonight(); }
+  if (ds.again !== undefined) { state.tonight = { step: 0, a: {} }; state.deck = []; return renderTonight(); }
+  if (ds.deck) {
+    const front = document.querySelector('.dcard.front');
+    if (!front || !state.deck.length) return;
+    if (ds.deck === 'info') return openDetail(state.deck[0].type, state.deck[0].id);
+    return flyOut(front, ds.deck);
+  }
+  if (ds.stype) { state.searchType = ds.stype; state.genre = null; hap('sel'); return renderGenres(document.getElementById('sres')); }
+  if (ds.genre) {
+    const id = Number(ds.genre);
+    state.genre = state.genre === id ? null : id;
+    document.querySelectorAll('[data-genre]').forEach((c) => c.classList.toggle('on', Number(c.dataset.genre) === state.genre));
+    hap('sel');
+    if (state.genre) loadGenre(id); else document.getElementById('gres').innerHTML = '';
+    return;
+  }
+  if (ds.lseg) { state.listSeg = ds.lseg; hap('sel'); return renderList(); }
+  if (ds.join !== undefined) { const l = state.me && state.me.channelLink; if (l) { if (tg && tg.openTelegramLink) tg.openTelegramLink(l); else window.open(l, '_blank'); } return; }
+  if (ds.recheck !== undefined) { hap('light'); return boot(true); }
+});
+
+// ---------- boot ----------
+async function boot(recheck) {
+  setLangDir();
+  if (!initData && !DEV) return renderGate(true);
+  let me;
+  try { me = await api('/me'); } catch (e) { if (e.status === 401) return renderGate(true); view().innerHTML = emptyHtml('📡', t('err'), '', `<button class="btn" data-recheck>${t('again')}</button>`); return; }
+  state.me = me;
+  if (me.lang && me.lang !== lang) {
+    let stored = null; try { stored = localStorage.getItem('sans.lang'); } catch (e) {}
+    if (!stored) { lang = me.lang; setLangDir(); }
+  }
+  if (!me.member) { if (recheck) toast(t('notYet')); return renderGate(false); }
+  renderTabs();
+  const h = location.hash;
+  const m = h.match(/^#\/t\/(movie|tv)\/(\d+)/);
+  const tab = (h.match(/^#\/(tonight|search|list)/) || [])[1];
+  state.tab = tab || 'home';
+  renderTabs();
+  render();
+  if (m) openDetail(m[1], Number(m[2]));
+}
+
+if (tg) {
+  try {
+    tg.ready(); tg.expand();
+    if (tg.setHeaderColor) tg.setHeaderColor('#0c0b0a');
+    if (tg.setBackgroundColor) tg.setBackgroundColor('#0c0b0a');
+    if (tg.setBottomBarColor) tg.setBottomBarColor('#0c0b0a');
+    if (tg.disableVerticalSwipes) tg.disableVerticalSwipes();
+    if (tg.BackButton) tg.BackButton.onClick(() => closeDetail());
+  } catch (e) {}
+}
+window.addEventListener('popstate', () => { closeDetail(); });
+boot(false);
+})();
+</script>
+</body>
+</html>
