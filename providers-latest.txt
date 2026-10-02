@@ -1,0 +1,116 @@
+run: https://github.com/Amirmahdavi2022/sans/actions/runs/37010124711
+when: 2026-10-02T13:00:27Z
+
+movie US: free/ads titles total 20001
+movie CA: free/ads titles total 20001
+movie GB: free/ads titles total 20001
+movie AU: free/ads titles total 20001
+movie DE: free/ads titles total 20001
+movie NL: free/ads titles total 15998
+movie TR: free/ads titles total 3775
+
+== movie: free/ads providers seen ==
+212	Hoopla	free	US,CA,AU	seen 13	logo /gtjNBzAoGgUtYzt0UKXmwG34WWL.png
+73	Tubi TV	ads	US,CA,AU	seen 11	logo /9dEuvA8wg5TSeFBZlPxSVxFdimJ.png
+35	Rakuten TV	ads	DE,NL	seen 10	logo /872dfVu1biZISJ8rO143CZZutPR.png
+538	Plex	ads	US,CA,AU,NL	seen 9	logo /blAEhvx3XX8sV0fFVFk88FFjubs.png
+41	ITVX	ads	GB	seen 8	logo /nIViE3wOPV5Jyv45T7hetHyG6iS.png
+2555	Bloodstream	free	US,CA,NL,TR	seen 7	logo /grSWrznc2QaymD5bM0MxMmcdrQl.png
+613	Amazon Prime Video Free with Ads	ads	US,DE	seen 5	logo /fuVBtr57kxnYzOILZ38xqSmBeyR.png
+1898	Amazon MX Player	ads	US,DE	seen 5	logo /46U3TOB3PhVDjA7qaFOuYSaGMiq.png
+132	SBS On Demand	ads	AU	seen 5	logo /o337eBcyEUYm1kcFkgkaOLLjnEz.png
+2285	JustWatch TV	free	NL,TR	seen 5	logo /aJXLTvX11u4fBLMPRVJZVKkLYHP.png
+207	The Roku Channel	ads	US	seen 4	logo /b7uhrYJtAe7b1ieJGg705vTbwrX.png
+2077	Plex Channel	ads	US,NL	seen 4	logo /1gC0K43JMyMtVpqczxvwBp0pkxn.png
+332	Fandango at Home Free	ads	US	seen 4	logo /wpOt6x0dRxTrIzuBosto4LGd7E9.png
+191	Kanopy	free	US	seen 4	logo /cltb8XKan9ierp23ItPmCOcVLRa.png
+230	Crave	free	CA	seen 4	logo /a2o4bE63LR71m8jHrkx9BnBucN0.png
+304	Joyn	ads	DE	seen 4	logo /fXtgvU410LTT6NjQ4ERdUzoUHQC.png
+38	BBC iPlayer	free	GB	seen 3	logo /vi6XJCpJ9GpAPD3rDSRzMC812Z.png
+135	ABC iview	free	AU	seen 3	logo /wy6HfNZHCKX2q9gTGk0Rgutd0VA.png
+234	Arte	free	DE	seen 3	logo /ieo2l4zOaljYqJNGxWY8jWryld5.png
+2623	Artiflix	free	TR	seen 3	logo /hO4tZhtSJ7VrVnJusimkY3MltSx.png
+314	CBC Gem	ads	CA	seen 2	logo /klrHjePSLUguAFNIV4M9LTXD8RM.png
+2478	FOUND TV	ads	TR	seen 2	logo /2hAu4MUecOOMTtrlJ3XEqB4dhZr.png
+559	Filmzie	ads	TR	seen 2	logo /6tVbNdx7Yzvi6LThNW5Wo1yov6A.png
+2409	Fawesome	free	US	seen 1	logo /dNF4vWhF3TduWvOyfVxEyTqSNRl.png
+235	YouTube Free	ads	US	seen 1	logo /gqaJWT5oFiJyVDojVLYRSFPbhQ1.png
+2679	Amasian TV	ads	US	seen 1	logo /gnmo98waJ6PHt9uKZaTo8Wq95Ky.png
+146	iciTouTV	ads	CA	seen 1	logo /dLpf8SgUM19VcFyMrK2KFcsF52i.png
+300	Pluto TV	ads	CA	seen 1	logo /fN4czqaMQNLeF6sSSIjGbAWzvwK.png
+103	Channel 4	ads	GB	seen 1	logo /kMT8p43W3BsXBe9mqCIPDNepser.png
+448	Beamafilm	free	AU	seen 1	logo /wBsOmMyZWC6f4f1bzEeLPyoM7BY.png
+246	7plus	ads	AU	seen 1	logo /nhp23IYeFqZm4J2ZseUzSPuZ1UM.png
+82	10	ads	AU	seen 1	logo /t0Rghe8mHePFrWfEnGVYiWlu6YF.png
+2201	Toggo	ads	DE	seen 1	logo /jYpsf3rTUY6q2PfhcNEDr8haZaU.png
+360	NPO Start	ads	NL	seen 1	logo /iVAJklPcCjj15989GVJufXqsVtS.png
+tv US: free/ads titles total 17779
+tv CA: free/ads titles total 9141
+tv GB: free/ads titles total 7349
+tv AU: free/ads titles total 6781
+tv DE: free/ads titles total 5536
+tv NL: free/ads titles total 1512
+tv TR: free/ads titles total 542
+
+== tv: free/ads providers seen ==
+350	Apple TV	free	US,CA,GB,AU,DE,NL	seen 15	logo /9icYBfYFcwgCbky5VdGUIKJ4C5i.png
+283	Crunchyroll	ads	TR	seen 11	logo /uFL3c4Cq8M6WoLymlC5Y8bmGytV.png
+246	7plus	ads	AU	seen 9	logo /nhp23IYeFqZm4J2ZseUzSPuZ1UM.png
+304	Joyn	ads	DE	seen 7	logo /fXtgvU410LTT6NjQ4ERdUzoUHQC.png
+79	NBC	ads	US	seen 5	logo /geRNAmvuPF6hOLExMHLKpt7bGBD.png
+2303	Paramount Plus Premium	free	US,GB	seen 5	logo /4N4BMd0Mm0kHAmF7RZgL5lW3cwc.png
+1853	Paramount Plus Apple TV channel	free	US,GB	seen 5	logo /xu4LyKTwasTbta1Z0qWtZG48yZ3.png
+119	Amazon Prime Video	free	NL,TR	seen 5	logo /gMZdpavHmxFNnLpMHwVxfqeux2g.png
+2616	Paramount Plus Essential	free	US	seen 4	logo /uPWQPyF4nqwtfPNmGcFcenU57HG.png
+41	ITVX	ads	GB	seen 4	logo /nIViE3wOPV5Jyv45T7hetHyG6iS.png
+300	Pluto TV	ads	US,CA	seen 3	logo /fN4czqaMQNLeF6sSSIjGbAWzvwK.png
+449	Global TV	ads	CA	seen 3	logo /v53oSfNUIyC1gKy8ICKb2KguUGr.png
+538	Plex	ads	CA,NL	seen 3	logo /blAEhvx3XX8sV0fFVFk88FFjubs.png
+360	NPO Start	ads	NL	seen 3	logo /iVAJklPcCjj15989GVJufXqsVtS.png
+207	The Roku Channel	ads	US	seen 2	logo /b7uhrYJtAe7b1ieJGg705vTbwrX.png
+344	Rakuten Viki	ads	CA,DE	seen 2	logo /AoNsevRecTdVv4xQEf1oLRGO2yh.png
+212	Hoopla	free	CA	seen 2	logo /gtjNBzAoGgUtYzt0UKXmwG34WWL.png
+73	Tubi TV	ads	CA	seen 2	logo /9dEuvA8wg5TSeFBZlPxSVxFdimJ.png
+333	5	ads	GB	seen 2	logo /3qOFvgbW0uVNL8kIIAmWHzs9Oqp.png
+103	Channel 4	ads	GB	seen 2	logo /kMT8p43W3BsXBe9mqCIPDNepser.png
+2077	Plex Channel	ads	NL	seen 2	logo /1gC0K43JMyMtVpqczxvwBp0pkxn.png
+613	Amazon Prime Video Free with Ads	ads	US	seen 1	logo /fuVBtr57kxnYzOILZ38xqSmBeyR.png
+1898	Amazon MX Player	ads	US	seen 1	logo /46U3TOB3PhVDjA7qaFOuYSaGMiq.png
+486	Spectrum On Demand	free	US	seen 1	logo /6qPtM96UZkt3Bu4ZFPsDeHFWUZ2.png
+2665	TV5 Unis	free	CA	seen 1	logo /7fJWXuoozIzLnMNUN2d2XsOiVo5.png
+146	iciTouTV	ads	CA	seen 1	logo /dLpf8SgUM19VcFyMrK2KFcsF52i.png
+531	Paramount Plus	free	GB	seen 1	logo /pkx3klJlwW5JdtaulvDx6hDNtch.png
+2304	Paramount Plus Basic with Ads	free	GB	seen 1	logo /ylBHMFuVsJqQ8JUzmfmPsEn97Ez.png
+82	10	ads	AU	seen 1	logo /t0Rghe8mHePFrWfEnGVYiWlu6YF.png
+537	ZDF	free	DE	seen 1	logo /sQsgEUFPgsuJaBf68OJ7s6ht6ta.png
+498	South Park	ads	NL	seen 1	logo /1mN5bEUgoHk1L5YAMnB5DC3p4qb.png
+
+movie/10331 US link=https://www.themoviedb.org/movie/10331-night-of-the-living-dead/watch?locale=US
+  free: 2285:JustWatch TV, 2736:Brew, 191:Kanopy, 212:Hoopla, 2239:FlixHouse, 2308:Darkroom, 638:Public Domain Movies, 2409:Fawesome, 2555:Bloodstream, 2667:YOW.tv
+  ads: 207:The Roku Channel, 332:Fandango at Home Free, 300:Pluto TV, 439:Shout! Factory TV, 538:Plex, 2077:Plex Channel, 613:Amazon Prime Video Free with Ads, 1957:Cineverse, 1963:Xumo Play, 1971:DistroTV, 2533:Mometu, 73:Tubi TV, 1898:Amazon MX Player
+  flatrate: 257:fuboTV, 1825:HBO Max Amazon Channel, 583:MGM+ Amazon Channel, 386:Peacock Premium, 2383:Philo, 2736:Brew, 528:AMC+ Amazon Channel, 34:MGM Plus, 455:Night Flight Plus, 204:Shudder Amazon Channel, 1794:Starz Amazon Channel, 202:Screambox Amazon Channel, 331:FlixFling, 1899:HBO Max, 43:Starz, 2049:Shudder Apple TV channel, 1855:Starz Apple TV channel, 387:Peacock Premium Plus, 2367:Midnight Pulp Amazon Channel, 2555:Bloodstream, 2703:Chilling
+  rent: 10:Amazon Video, 2:Apple TV Store, 2736:Brew, 3:Google Play Movies, 192:YouTube, 7:Fandango At Home, 331:FlixFling, 2565:MovieMe
+  buy: 10:Amazon Video, 2:Apple TV Store, 2736:Brew, 3:Google Play Movies, 192:YouTube, 7:Fandango At Home, 331:FlixFling
+
+movie/157336 US link=https://www.themoviedb.org/movie/157336-interstellar/watch?locale=US
+  free: 
+  ads: 
+  flatrate: 9:Amazon Prime Video, 2303:Paramount Plus Premium, 2616:Paramount Plus Essential, 582:Paramount+ Amazon Channel, 633:Paramount+ Roku Premium Channel, 2100:Amazon Prime Video with Ads
+  rent: 2285:JustWatch TV, 10:Amazon Video, 2:Apple TV Store, 3:Google Play Movies, 192:YouTube, 7:Fandango At Home, 331:FlixFling, 538:Plex
+  buy: 10:Amazon Video, 2:Apple TV Store, 3:Google Play Movies, 192:YouTube, 7:Fandango At Home
+
+tv/1399 US link=https://www.themoviedb.org/tv/1399-game-of-thrones/watch?locale=US
+  free: 
+  ads: 
+  flatrate: 1825:HBO Max Amazon Channel, 1899:HBO Max
+  rent: 
+  buy: 10:Amazon Video, 2:Apple TV Store, 3:Google Play Movies, 7:Fandango At Home
+
+== search links ==
+tubi	200	https://tubitv.com/search/Night%20of%20the%20Living%20Dead	len 42773	mentions title: false
+pluto	200	https://pluto.tv/us/watch/live-tv/	len 842149	mentions title: false
+plex	200	https://watch.plex.tv/search?q=Night%20of%20the%20Living%20Dead	len 759783	mentions title: true
+roku	200	https://therokuchannel.roku.com/search/Night%20of%20the%20Living%20Dead	len 24231	mentions title: false
+youtube	200	https://m.youtube.com/results?search_query=Night+of+the+Living+Dead+full+movie	len 558495	mentions title: true
+crackle	ERR fetch failed
+justwatch	200	https://www.justwatch.com/us/search?q=Night%20of%20the%20Living%20Dead	len 1859789	mentions title: true
