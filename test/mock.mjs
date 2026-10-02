@@ -83,8 +83,10 @@ const server = http.createServer((req, res) => {
         { identifier: 'nowhere_film', title: 'Nowhere Film', year: '1925' },
       ] } });
       if (q.includes('interstellar')) return send({ response: { docs: [
-        { identifier: 'interstellar_trailer', title: 'Interstellar Trailer', year: '2014', licenseurl: cc },
-        { identifier: 'interstellar_cc', title: 'Interstellar', year: '2014', licenseurl: cc },
+        { identifier: 'interstellar_trailer', title: 'Interstellar Trailer', year: '2014', licenseurl: cc, collection: ['feature_films'] },
+        { identifier: 'interstellar_rip', title: 'Interstellar 2014 1080p BluRay x264 YIFY', year: '2014', licenseurl: cc, collection: ['opensource_movies'] },
+        { identifier: 'interstellar_upload', title: 'Interstellar', year: '2014', licenseurl: cc, collection: ['opensource_movies'] },
+        { identifier: 'interstellar_cc', title: 'Interstellar', year: '2014', licenseurl: cc, collection: ['feature_films'] },
       ] } });
       if (q.includes('dune')) return send({ response: { docs: [{ identifier: 'dune_full', title: 'Dune: Part Two', year: '2024' }] } });
       return send({ response: { docs: [] } });
@@ -92,7 +94,8 @@ const server = http.createServer((req, res) => {
     const iam = p.match(/^\/archive\/metadata\/(.+)$/);
     if (iam) {
       const id = decodeURIComponent(iam[1]);
-      if (id === 'interstellar_cc') return send({ metadata: { mediatype: 'movies', title: 'Interstellar', licenseurl: 'http://creativecommons.org/licenses/by/4.0/' }, files: [{ name: 'interstellar.mp4', format: 'h.264' }] });
+      if (id === 'interstellar_cc') return send({ metadata: { mediatype: 'movies', title: 'Interstellar', licenseurl: 'http://creativecommons.org/licenses/by/4.0/', collection: ['feature_films', 'moviesandfilms'] }, files: [{ name: 'interstellar.mp4', format: 'h.264' }] });
+      if (id === 'interstellar_upload') return send({ metadata: { mediatype: 'movies', title: 'Interstellar', licenseurl: 'http://creativecommons.org/licenses/by/4.0/', collection: 'opensource_movies' }, files: [{ name: 'interstellar.mp4' }] });
       if (id === 'dune_full') return send({ metadata: { mediatype: 'movies', title: 'Dune: Part Two' }, files: [{ name: 'dune.mp4' }] });
       return send({});
     }
@@ -105,7 +108,7 @@ const server = http.createServer((req, res) => {
     if (q === '/movie/now_playing') return send(list(10, 4, 'movie'));
     if (q === '/tv/on_the_air') return send(list(10, 1, 'tv'));
     if (q === '/tv/top_rated') return send(list(10, 3, 'tv'));
-    if (q === '/search/movie') return send(u.searchParams.get('query') === 'Interstellar' && u.searchParams.get('primary_release_year') === '2014' ? { results: [item(6, 'movie')] } : { results: [] });
+    if (q === '/search/movie') return send(u.searchParams.get('query') === 'Interstellar' && u.searchParams.get('primary_release_year') === '2014' ? { results: [{ ...item(6, 'movie'), vote_count: 900, vote_average: 8.4 }] } : { results: [] });
     if (q === '/search/multi') return send(u.searchParams.get('query') === 'zzz' ? { results: [] } : list(7, 5));
     let m = q.match(/^\/discover\/(movie|tv)$/);
     if (m) return send(list(10, Number(u.searchParams.get('page') || 1) * 3, m[1]));

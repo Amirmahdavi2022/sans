@@ -12,7 +12,15 @@ const cases = [
   [961, true], // The General 1926
   [653, true], // Nosferatu 1922
   [234, true], // The Cabinet of Dr. Caligari 1920
-  [3082, null], // Modern Times 1936, still in copyright: whatever turns up must carry an open licence
+  [3082, false], // Modern Times 1936, still in copyright
+  [155, false], // The Dark Knight
+  [597, false], // Titanic
+  [496243, false], // Parasite
+  [129, false], // Spirited Away
+  [19995, false], // Avatar
+  [238, false], // The Godfather
+  [10378, true], // Big Buck Bunny 2008, Creative Commons
+  [3085, true], // His Girl Friday 1940, public domain
   [157336, false], // Interstellar 2014
   [693134, false], // Dune: Part Two 2024
   [27205, false], // Inception 2010

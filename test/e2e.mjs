@@ -61,6 +61,7 @@ r = await get('/api/archive/movie/1006?lang=fa'); assert.equal(r.status, 200);
 assert.equal(r.body.item && r.body.item.id, 'interstellar_cc'); assert.equal(r.body.item.url, 'https://archive.org/details/interstellar_cc'); assert.equal(r.body.item.pd, false); ok('archive: open-licence copy found, trailer skipped');
 r = await get('/api/archive/movie/1000?lang=fa'); assert.equal(r.body.item, null); ok('archive: copy of an in-copyright film without a licence is never shown');
 r = await get('/api/archive/movie/1006?lang=fa&ia=..%2Fevil'); assert.equal(r.body.item.id, 'interstellar_cc'); ok('archive: bad hint ignored');
+r = await get('/api/archive/movie/1006?lang=fa&ia=interstellar_upload'); assert.equal(r.body.item.id, 'interstellar_cc'); ok('archive: a licence on a plain user upload is not trusted');
 r = await get('/api/archive/movie/1000?lang=fa&ia=dune_full'); assert.equal(r.body.item, null); ok('archive: hint still has to be legal');
 r = await get('/api/classics?lang=fa'); assert.deepEqual(r.body.items.map((c) => [c.id, c.ia]), [[1006, 'interstellar_cc']]); ok('classics row: matched to TMDB, trailers and unmatched dropped');
 

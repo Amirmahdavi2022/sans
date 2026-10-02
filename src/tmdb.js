@@ -338,13 +338,15 @@ export async function archiveFor(env, id, hint) {
 }
 
 // Home row of public-domain classics that play free anywhere.
-export async function classicsRow(env, lang, max = 24) {
-  const list = (await IA.classics(env)).slice(0, max);
+// Only well-known, well-liked films: the Archive's most downloaded public-domain
+// titles also include exploitation and propaganda films (measured 2026-10-03).
+export async function classicsRow(env, lang, max = 36) {
+  const list = (await IA.classics(env, 60)).slice(0, max);
   const found = await Promise.all(list.map(async (x) => {
     try {
       const d = await tmdb(env, '/search/movie', { query: x.title, primary_release_year: x.year, language: LANGS[lang], include_adult: 'false' }, 86400);
       const hit = (d.results || []).find((r) => r.poster_path && Math.abs((year(r.release_date) || 0) - x.year) <= 1);
-      if (!hit) return null;
+      if (!hit || hit.adult || (hit.vote_count || 0) < 80 || (hit.vote_average || 0) < 6.3) return null;
       const c = card(hit, 'movie');
       if (!(c.year && c.year <= IA.pdYear()) && !/publicdomain|creativecommons/i.test(x.license)) return null;
       return { ...c, ia: x.id };
