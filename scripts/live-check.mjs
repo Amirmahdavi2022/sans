@@ -86,7 +86,7 @@ if (ok) {
   const en = await getJson(`${BASE}/api/home?lang=en`, H);
   line(en.rows && en.rows[0].items.length > 0, 'home in English', en.rows ? en.rows[0].items[0].title : why(en));
 }
-const s = await getJson(`${BASE}/api/search?q=${encodeURIComponent('اینترستلار')}&lang=fa`, H);
+const s = await getJson(`${BASE}/api/search?q=${encodeURIComponent('پدرخوانده')}&lang=fa`, H);
 line(s.items && s.items.length > 0, 'persian search', s.items && s.items[0] ? `${s.items[0].title} (${s.items[0].year})` : why(s));
 const s2 = await getJson(`${BASE}/api/search?q=breaking%20bad&lang=fa`, H);
 line(s2.items && s2.items.length > 0, 'english search', s2.items && s2.items[0] ? `${s2.items[0].title}` : why(s2));
