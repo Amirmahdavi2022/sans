@@ -251,7 +251,7 @@ const I = {
   fa: {
     sub: 'راهنمای فیلم و سریال', home: 'خانه', tonight: 'امشب چی؟', search: 'جستجو', list: 'لیست من',
     trending: 'داغِ امروز', now: 'تازه در سینما', onair: 'سریال‌های در حال پخش', popular: 'فیلم‌های محبوب', top: 'برترین فیلم‌ها', toptv: 'برترین سریال‌ها',
-    free: 'رایگان و قانونی ببین 🎟️',
+    free: 'فیلم رایگان و قانونی 🎟️', freetv: 'سریال رایگان و قانونی 📺',
     whereT: 'کجا ببینم؟', freeT: 'پخش رایگان و قانونی', watchBtn: 'ببین',
     freeNote: 'با تبلیغ پخش میشه. برای باز شدن، VPN همون کشوری که کنارش نوشته رو روشن کن. زیرنویس انگلیسی معمولاً هست.',
     noFree: 'فعلاً پخش رایگان قانونی براش پیدا نشد.', subsT: 'با اشتراک', moreWays: 'همه‌ی راه‌های دیدن',
@@ -286,7 +286,7 @@ const I = {
   en: {
     sub: 'Movie & series guide', home: 'Home', tonight: 'Tonight', search: 'Search', list: 'My list',
     trending: 'Trending today', now: 'In theaters', onair: 'Airing now', popular: 'Popular movies', top: 'Top rated movies', toptv: 'Top rated series',
-    free: 'Watch free & legal 🎟️',
+    free: 'Free & legal movies 🎟️', freetv: 'Free & legal series 📺',
     whereT: 'Where to watch', freeT: 'Free & legal streaming', watchBtn: 'Watch',
     freeNote: 'Ad-supported. Turn on a VPN for the country shown next to it. English subtitles are usually available.',
     noFree: 'No free legal stream found for this one yet.', subsT: 'With a subscription', moreWays: 'All ways to watch',
@@ -452,7 +452,7 @@ async function renderHome() {
       <div class="slide-body"><div class="slide-kicker">${ic.spark.replace('<svg', '<svg width="13" height="13"')} ${t('trendKick')} · ${typeLabel(c.type)}</div>
       <div class="slide-title">${esc(c.title)}</div>
       <div class="slide-meta">${c.rating ? `<span class="star">${ic.star}${dec(c.rating)}</span>` : ''}${c.year ? `<span>${yr(c.year)}</span>` : ''}</div></div></button>`).join('');
-  const titles = { free: t('free'), trending: t('trending'), now: t('now'), onair: t('onair'), popular: t('popular'), top: t('top'), toptv: t('toptv') };
+  const titles = { free: t('free'), freetv: t('freetv'), trending: t('trending'), now: t('now'), onair: t('onair'), popular: t('popular'), top: t('top'), toptv: t('toptv') };
   v.innerHTML = head
     + `<div class="hero" id="hero">${hero}</div><div class="dots" id="dots">${data.hero.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>`
     + `<button class="promo press" data-tab="tonight"><div class="promo-ico">🍿</div><div><b>${t('promoT')}</b><span>${t('promoS')}</span></div><span class="go">${ic.arrow}</span></button>`

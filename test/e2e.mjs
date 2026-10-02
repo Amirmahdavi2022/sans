@@ -44,7 +44,7 @@ r = await get('/api/home?lang=fa', H(outsider)); assert.equal(r.status, 403); as
 
 // --- content ---
 r = await get('/api/home?lang=fa'); assert.equal(r.status, 200);
-assert.ok(r.body.hero.length > 0 && r.body.hero.every((c) => c.backdrop)); assert.equal(r.body.rows.length, 7); assert.equal(r.body.rows[1].key, 'free');
+assert.ok(r.body.hero.length > 0 && r.body.hero.every((c) => c.backdrop)); assert.equal(r.body.rows.length, 8); assert.equal(r.body.rows[1].key, 'free'); assert.equal(r.body.rows[2].key, 'freetv'); assert.ok(r.body.rows[2].items.every((c) => c.type === 'tv'));
 assert.ok(r.body.rows.find((x) => x.key === 'onair').items.every((c) => c.type === 'tv')); ok('home rows');
 r = await get('/api/title/movie/1000?lang=fa'); assert.equal(r.status, 200);
 assert.equal(r.body.overviewLang, 'en'); assert.ok(r.body.overview.length > 0); ok('persian overview missing → english fallback');
@@ -60,7 +60,10 @@ r = await get('/api/season/1001/2?lang=fa'); assert.equal(r.body.episodes.length
 r = await get('/api/search?q=dune&lang=fa'); assert.ok(r.body.items.length > 0); ok('search');
 r = await get('/api/search?q=zzz&lang=fa'); assert.equal(r.body.items.length, 0); ok('search empty');
 r = await get('/api/discover?type=movie&mood=laugh&time=short&shuffle=1&lang=fa'); assert.ok(r.body.items.length > 0); assert.equal(r.r.headers.get('cache-control'), 'no-store'); ok('tonight discover');
-r = await get('/api/genres?lang=en'); assert.ok(r.body.movie.length && r.body.tv.length); ok('genres');
+r = await get('/api/genres?lang=en'); assert.ok(r.body.movie.length && r.body.tv.length); assert.equal(r.body.movie[0].name, 'Action'); ok('genres');
+r = await get('/api/genres?lang=fa'); assert.ok(r.body.movie.every((g) => g.name)); assert.equal(r.body.movie[0].name, 'اکشن'); assert.equal(r.body.tv[0].name, 'اکشن');
+assert.equal(r.body.movie.find((g) => g.id === 99999).name, 'Brand New'); ok('persian genres never empty (map + english fallback)');
+r = await get('/api/title/movie/1000?lang=fa'); assert.deepEqual(r.body.genres, ['درام', 'علمی‌تخیلی', 'ماجراجویی']); ok('detail genres in persian');
 
 // --- lists ---
 assert.equal((await post('/api/list', { kind: 'watch', on: true, type: 'movie', id: 1000, title: 'Dune', poster: '/p_0.svg', year: 2024, rating: 8.1 })).status, 200);

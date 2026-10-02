@@ -24,6 +24,20 @@ export async function tmdb(env, path, params = {}, ttl = 3600) {
   return r.json();
 }
 
+// TMDB has no Persian genre names (fa-IR returns name: null, measured 2026-10-02),
+// so Persian names come from here, keyed by TMDB's fixed genre ids.
+export const GENRES_FA = {
+  28: 'اکشن', 12: 'ماجراجویی', 16: 'انیمیشن', 35: 'کمدی', 80: 'جنایی', 99: 'مستند',
+  18: 'درام', 10751: 'خانوادگی', 14: 'فانتزی', 36: 'تاریخی', 27: 'ترسناک', 10402: 'موزیکال',
+  9648: 'معمایی', 10749: 'عاشقانه', 878: 'علمی‌تخیلی', 10770: 'فیلم تلویزیونی', 53: 'هیجان‌انگیز',
+  10752: 'جنگی', 37: 'وسترن', 10759: 'اکشن و ماجراجویی', 10762: 'کودک', 10763: 'خبری',
+  10764: 'ریالیتی‌شو', 10765: 'علمی‌تخیلی و فانتزی', 10766: 'سریال روزانه', 10767: 'تاک‌شو',
+  10768: 'جنگ و سیاست',
+};
+export function genreName(g, lang) {
+  return (lang === 'fa' && GENRES_FA[g.id]) || g.name || GENRES_FA[g.id] || '';
+}
+
 const year = (d) => (d && /^\d{4}/.test(d) ? Number(d.slice(0, 4)) : null);
 const round1 = (n) => (typeof n === 'number' && n > 0 ? Math.round(n * 10) / 10 : null);
 
@@ -52,7 +66,7 @@ export function cards(list, forceType) {
 
 export async function home(env, lang) {
   const language = LANGS[lang];
-  const [trending, popular, top, now, onAir, topTv, free] = await Promise.all([
+  const [trending, popular, top, now, onAir, topTv, free, freeTv] = await Promise.all([
     tmdb(env, '/trending/all/day', { language }, 1800),
     tmdb(env, '/movie/popular', { language, region: 'US' }, 3600),
     tmdb(env, '/movie/top_rated', { language }, 21600),
@@ -63,12 +77,17 @@ export async function home(env, lang) {
       language, watch_region: 'US', with_watch_monetization_types: 'ads',
       sort_by: 'popularity.desc', 'vote_count.gte': 300, 'vote_average.gte': 6.3,
     }, 21600),
+    tmdb(env, '/discover/tv', {
+      language, watch_region: 'US', with_watch_monetization_types: 'ads',
+      sort_by: 'popularity.desc', 'vote_count.gte': 150, 'vote_average.gte': 6.5,
+    }, 21600).catch(() => ({ results: [] })),
   ]);
   return {
     hero: cards(trending.results).filter((c) => c.backdrop).slice(0, 6),
     rows: [
       { key: 'trending', items: cards(trending.results) },
       { key: 'free', items: cards(free.results, 'movie') },
+      { key: 'freetv', items: cards(freeTv.results, 'tv') },
       { key: 'now', items: cards(now.results, 'movie') },
       { key: 'onair', items: cards(onAir.results, 'tv') },
       { key: 'popular', items: cards(popular.results, 'movie') },
@@ -130,7 +149,7 @@ export async function title(env, type, id, lang) {
     runtime: type === 'movie' ? d.runtime || null : (d.episode_run_time && d.episode_run_time[0]) || null,
     rating: round1(d.vote_average),
     votes: d.vote_count || 0,
-    genres: (d.genres || []).map((g) => g.name),
+    genres: (d.genres || []).map((g) => genreName(g, lang)).filter(Boolean),
     poster: d.poster_path || null,
     backdrop: d.backdrop_path || null,
     status: d.status || null,
@@ -160,14 +179,17 @@ export async function title(env, type, id, lang) {
 // "ads" means genuinely free with ads. TMDB's "free" bucket also holds some paid
 // services by mistake (Paramount+, Prime in some countries, measured 2026-10-02),
 // so from "free" only services checked to be really free are kept.
-const FREE_OK = new Set([191, 212, 638, 2285, 2409, 2239, 537, 2665]);
-const NOT_FREE = new Set([2303, 1853, 2616, 531, 2304, 119, 9, 486]);
-export const WATCH_REGIONS = ['US', 'CA', 'GB', 'AU', 'DE', 'NL', 'FR', 'TR'];
-const JW_PATH = { US: 'us', CA: 'ca', GB: 'uk', AU: 'au', DE: 'de', NL: 'nl', FR: 'fr', TR: 'tr' };
+const FREE_OK = new Set([191, 212, 638, 2285, 2409, 2239, 537, 2665,
+  // public broadcasters that are free to everyone (no account or library card)
+  234, 493, 442, 620, 323, 2151, 2237, 541, 452, 135, 2686]);
+const NOT_FREE = new Set([2303, 1853, 2616, 531, 2304, 119, 9, 486, 350]);
+export const WATCH_REGIONS = ['US', 'CA', 'GB', 'AU', 'NZ', 'IE', 'DE', 'AT', 'CH', 'NL', 'BE', 'FR', 'IT', 'ES', 'PT',
+  'SE', 'NO', 'DK', 'FI', 'TR', 'IN', 'BR', 'MX', 'AR', 'JP', 'KR', 'SG', 'PH', 'ZA', 'AE'];
+const JW_PATH = { US: 'us', GB: 'uk' };
 const PLEX = new Set([538, 2077]);
 
 export function justwatchUrl(region, query) {
-  return `https://www.justwatch.com/${JW_PATH[region] || 'us'}/search?q=${encodeURIComponent(query)}`;
+  return `https://www.justwatch.com/${JW_PATH[region] || (region ? region.toLowerCase() : 'us')}/search?q=${encodeURIComponent(query)}`;
 }
 
 export function watchFrom(results, query) {
@@ -187,7 +209,7 @@ export function watchFrom(results, query) {
   }
   const list = [...free.values()]
     .sort((a, b) => b.regions.length - a.regions.length || a.order - b.order)
-    .slice(0, 8)
+    .slice(0, 10)
     .map((e) => ({
       id: e.id, name: e.name, logo: e.logo, regions: e.regions,
       // Plex search was checked to land on the title; for everything else the
@@ -285,5 +307,12 @@ export async function genres(env, lang) {
     tmdb(env, '/genre/movie/list', { language }, 86400),
     tmdb(env, '/genre/tv/list', { language }, 86400),
   ]);
-  return { movie: m.genres || [], tv: t.genres || [] };
+  // fa-IR names are null; English list gives the fallback for any id not mapped
+  const fix = async (list, kind) => {
+    if (lang !== 'fa' || list.every((g) => g.name)) return list.map((g) => ({ id: g.id, name: genreName(g, lang) }));
+    const en = await tmdb(env, `/genre/${kind}/list`, { language: LANGS.en }, 86400);
+    const enName = new Map((en.genres || []).map((g) => [g.id, g.name]));
+    return list.map((g) => ({ id: g.id, name: GENRES_FA[g.id] || g.name || enName.get(g.id) || '' })).filter((g) => g.name);
+  };
+  return { movie: await fix(m.genres || [], 'movie'), tv: await fix(t.genres || [], 'tv') };
 }

@@ -34,7 +34,7 @@ function detail(type, id) {
   const i = id - 1000;
   const x = item(i, type);
   const common = {
-    ...x, genres: [{ id: 18, name: 'درام' }, { id: 878, name: 'علمی-تخیلی' }, { id: 12, name: 'ماجراجویی' }],
+    ...x, genres: [{ id: 18, name: 'Drama' }, { id: 878, name: 'Science Fiction' }, { id: 12, name: 'Adventure' }],
     tagline: 'هر سانس یه داستانه',
     videos: { results: [{ site: 'YouTube', type: 'Trailer', key: 'abc123', official: true }] },
     credits: { cast: Array.from({ length: 8 }, (_, k) => ({ name: ['Timothée Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Javier Bardem', 'Austin Butler', 'Florence Pugh', 'Dave Bautista', 'Josh Brolin'][k], character: 'Role ' + (k + 1), profile_path: null })), crew: [{ job: 'Director', name: 'Denis Villeneuve' }] },
@@ -85,7 +85,12 @@ const server = http.createServer((req, res) => {
     let m = q.match(/^\/discover\/(movie|tv)$/);
     if (m) return send(list(10, Number(u.searchParams.get('page') || 1) * 3, m[1]));
     m = q.match(/^\/genre\/(movie|tv)\/list$/);
-    if (m) return send({ genres: [{ id: 28, name: 'اکشن' }, { id: 35, name: 'کمدی' }, { id: 18, name: 'درام' }, { id: 27, name: 'ترسناک' }, { id: 878, name: 'علمی-تخیلی' }, { id: 16, name: 'انیمیشن' }, { id: 10749, name: 'عاشقانه' }, { id: 9648, name: 'معمایی' }] });
+    // like real TMDB: fa-IR genre names come back null; 99999 is an id with no Persian mapping
+    if (m) {
+      const en = [[28, 'Action'], [35, 'Comedy'], [18, 'Drama'], [27, 'Horror'], [878, 'Science Fiction'], [16, 'Animation'], [99999, 'Brand New']];
+      const fa = (u.searchParams.get('language') || '').startsWith('fa');
+      return send({ genres: en.map(([id, name]) => ({ id, name: fa ? null : name })) });
+    }
     m = q.match(/^\/tv\/(\d+)\/season\/(\d+)$/);
     if (m) return send({ season_number: Number(m[2]), episodes: Array.from({ length: 6 }, (_, k) => ({ episode_number: k + 1, name: `قسمت ${k + 1}`, air_date: '2026-03-0' + (k + 1), runtime: 54, vote_average: 8.2, still_path: null, overview: '' })) });
     m = q.match(/^\/(movie|tv)\/(\d+)$/);
