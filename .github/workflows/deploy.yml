@@ -62,6 +62,13 @@ jobs:
             echo "go=yes" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Webhook secret
+        if: steps.ready.outputs.go == 'yes'
+        run: |
+          whs=$(printf '%s' "$BOT_TOKEN:sans-webhook-v2" | sha256sum | cut -c1-48)
+          echo "::add-mask::$whs"
+          echo "WHS=$whs" >> "$GITHUB_ENV"
+
       - name: Deploy
         if: steps.ready.outputs.go == 'yes'
         run: |
@@ -83,8 +90,7 @@ jobs:
 
             botname=$(curl -sf "https://api.telegram.org/bot$BOT_TOKEN/getMe" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).result.username))')
             echo "bot: @$botname"
-            whs=$(printf '%s' "$BOT_TOKEN:sans-webhook" | sha256sum | cut -c1-48)
-            echo "::add-mask::$whs"
+            whs="$WHS"
 
             npx wrangler deploy --var "BOT_USERNAME:$botname" --var "CHANNEL:$CHANNEL" --var "PUBLIC_URL:$PUBLIC_URL"
             node -e 'require("fs").writeFileSync("/tmp/sec.json", JSON.stringify({TMDB_KEY:process.env.TMDB_KEY,BOT_TOKEN:process.env.BOT_TOKEN,WEBHOOK_SECRET:process.argv[1]}))' "$whs"

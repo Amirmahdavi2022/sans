@@ -8,7 +8,17 @@ const TOKEN = process.env.BOT_TOKEN;
 const CHANNEL = process.env.CHANNEL;
 const out = [];
 let failed = 0;
-const line = (ok, name, extra = '') => { out.push(`${ok ? 'ok  ' : 'FAIL'} ${name}${extra ? ' · ' + extra : ''}`); if (!ok) failed++; };
+const line = (ok, name, extra = '') => { const l = `${ok ? 'ok  ' : 'FAIL'} ${name}${extra ? ' · ' + extra : ''}`; out.push(l); console.log(l); if (!ok) failed++; };
+
+// Never throws: returns parsed JSON, or { _status, _body } describing what came back.
+async function getJson(url, headers) {
+  try {
+    const r = await fetch(url, { headers });
+    const text = await r.text();
+    try { const j = JSON.parse(text); if (j && typeof j === 'object') j._status = r.status; return j; } catch { return { _status: r.status, _body: text.slice(0, 160) }; }
+  } catch (e) { return { _status: 0, _body: String(e).slice(0, 160) }; }
+}
+const why = (j) => `http ${j._status} ${j._body || j.error || ''}`;
 
 function initData(user) {
   const p = new URLSearchParams({ auth_date: String(Math.floor(Date.now() / 1000)), user: JSON.stringify(user) });
@@ -37,6 +47,7 @@ line(me.ok, 'bot token works', me.ok ? '@' + me.result.username : me.description
 // A brand new custom domain can take a minute or two to get its certificate.
 const health = await retry(async () => { const r = await fetch(`${BASE}/api/health`); return r.ok ? r : null; });
 line(!!health, 'domain answers', BASE);
+if (!health) { const h = await getJson(`${BASE}/api/health`); line(false, 'health detail', why(h)); }
 
 const page = await fetch(`${BASE}/`).then((r) => r.text()).catch(() => '');
 line(page.includes('dir="rtl"'), 'mini app page');
@@ -59,32 +70,31 @@ if (admins.ok) {
 }
 const H = { 'x-init-data': initData(testUser) };
 
-const meApi = await fetch(`${BASE}/api/me`, { headers: H }).then((r) => r.json()).catch((e) => ({ error: String(e) }));
-line(meApi.member === true, '/api/me as a channel admin', JSON.stringify({ member: meApi.member, bot: meApi.bot }));
+const meApi = await getJson(`${BASE}/api/me`, H);
+line(meApi.member === true, '/api/me as a channel admin', meApi.member === undefined ? why(meApi) : JSON.stringify({ member: meApi.member, bot: meApi.bot }));
 
-const home = await fetch(`${BASE}/api/home?lang=fa`, { headers: H }).then((r) => r.json()).catch((e) => ({ error: String(e) }));
+const home = await getJson(`${BASE}/api/home?lang=fa`, H);
 const ok = home.rows && home.rows.every((r) => r.items.length > 0);
-line(!!ok, 'home from real TMDB (fa)', ok ? `hero ${home.hero.length}, first: ${home.rows[0].items[0].title}` : JSON.stringify(home).slice(0, 200));
+line(!!ok, 'home from real TMDB (fa)', ok ? `hero ${home.hero.length}, first: ${home.rows[0].items[0].title}` : why(home));
 
 if (ok) {
   const first = home.rows[0].items[0];
-  const d = await fetch(`${BASE}/api/title/${first.type}/${first.id}?lang=fa`, { headers: H }).then((r) => r.json());
-  line(!!d.title, 'title detail', `${d.title} · overview ${d.overviewLang} · trailer ${d.trailer ? 'yes' : 'no'} · cast ${d.cast && d.cast.length}`);
+  const d = await getJson(`${BASE}/api/title/${first.type}/${first.id}?lang=fa`, H);
+  line(!!d.title, 'title detail', !d.title ? why(d) : `${d.title} · overview ${d.overviewLang} · trailer ${d.trailer ? 'yes' : 'no'} · cast ${d.cast && d.cast.length}`);
   const im = await fetch(`${BASE}/img/w342${first.poster}`);
   line(im.ok && (im.headers.get('content-type') || '').startsWith('image/'), 'poster through image proxy', im.headers.get('content-type'));
-  const en = await fetch(`${BASE}/api/home?lang=en`, { headers: H }).then((r) => r.json());
-  line(en.rows && en.rows[0].items.length > 0, 'home in English', en.rows ? en.rows[0].items[0].title : '');
+  const en = await getJson(`${BASE}/api/home?lang=en`, H);
+  line(en.rows && en.rows[0].items.length > 0, 'home in English', en.rows ? en.rows[0].items[0].title : why(en));
 }
-const s = await fetch(`${BASE}/api/search?q=${encodeURIComponent('اینترستلار')}&lang=fa`, { headers: H }).then((r) => r.json());
-line(s.items && s.items.length > 0, 'persian search', s.items && s.items[0] ? `${s.items[0].title} (${s.items[0].year})` : '');
-const s2 = await fetch(`${BASE}/api/search?q=breaking%20bad&lang=fa`, { headers: H }).then((r) => r.json());
-line(s2.items && s2.items.length > 0, 'english search', s2.items && s2.items[0] ? `${s2.items[0].title}` : '');
-const disc = await fetch(`${BASE}/api/discover?type=movie&mood=mind&time=&shuffle=1&lang=fa`, { headers: H }).then((r) => r.json());
-line(disc.items && disc.items.length > 0, 'tonight picks', `${disc.items ? disc.items.length : 0} items`);
+const s = await getJson(`${BASE}/api/search?q=${encodeURIComponent('اینترستلار')}&lang=fa`, H);
+line(s.items && s.items.length > 0, 'persian search', s.items && s.items[0] ? `${s.items[0].title} (${s.items[0].year})` : why(s));
+const s2 = await getJson(`${BASE}/api/search?q=breaking%20bad&lang=fa`, H);
+line(s2.items && s2.items.length > 0, 'english search', s2.items && s2.items[0] ? `${s2.items[0].title}` : why(s2));
+const disc = await getJson(`${BASE}/api/discover?type=movie&mood=mind&time=&shuffle=1&lang=fa`, H);
+line(disc.items && disc.items.length > 0, 'tonight picks', disc.items ? `${disc.items.length} items` : why(disc));
 
 const wh = await tg('getWebhookInfo');
 line(wh.ok && wh.result.url === `${BASE}/tg/webhook`, 'webhook set', wh.ok ? `${wh.result.url} pending=${wh.result.pending_update_count}${wh.result.last_error_message ? ' last_error=' + wh.result.last_error_message : ''}` : wh.description);
 
-console.log(out.join('\n'));
 console.log(failed ? `\n${failed} check(s) failed` : '\nall live checks passed');
 process.exit(0);
