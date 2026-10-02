@@ -151,6 +151,16 @@ img{display:block}
 .subs{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
 .subs small{color:var(--muted);font-size:12px;margin-inline-end:4px}
 .subs img{width:28px;height:28px;border-radius:7px}
+.ia{display:flex;align-items:center;gap:12px;margin:4px var(--gap) 8px;padding:12px 14px;width:calc(100% - 2 * var(--gap));text-align:start;border-radius:var(--r-lg);background:linear-gradient(135deg,rgba(94,211,154,.14),rgba(94,211,154,.04));border:1px solid rgba(94,211,154,.32);opacity:1;transform:translateY(0);transition:opacity 220ms var(--ease-out),transform 140ms var(--ease-out)}
+@starting-style{.ia{opacity:0;transform:translateY(6px)}}
+.ia .ia-ico{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;font-size:20px;background:rgba(94,211,154,.16)}
+.ia b{display:block;font-size:14px;font-weight:800}
+.ia span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.6}
+.ia .go{margin-inline-start:auto;flex:none;height:32px;padding:0 14px;border-radius:10px;background:var(--green);color:#06120c;font-weight:800;font-size:13px;display:grid;place-items:center}
+.sublink{display:flex;align-items:center;gap:10px;margin:0 var(--gap) 6px;width:calc(100% - 2 * var(--gap));padding:11px 14px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);text-align:start;font-size:13px}
+.sublink b{font-weight:700}
+.sublink small{margin-inline-start:auto;color:var(--faint);font-size:11.5px}
+@media (prefers-reduced-motion:reduce){.ia{transition:opacity 200ms ease}@starting-style{.ia{transform:none}}}
 .watch-more{display:block;width:100%;padding:11px 14px;border-top:1px solid var(--line);color:var(--amber);font-size:13px;font-weight:700;text-align:center}
 .credit{padding:22px var(--gap) calc(26px + var(--safe-b));color:var(--faint);font-size:11px;text-align:center;line-height:1.7}
 .credit b{color:var(--muted)}
@@ -251,7 +261,9 @@ const I = {
   fa: {
     sub: 'راهنمای فیلم و سریال', home: 'خانه', tonight: 'امشب چی؟', search: 'جستجو', list: 'لیست من',
     trending: 'داغِ امروز', now: 'تازه در سینما', onair: 'سریال‌های در حال پخش', popular: 'فیلم‌های محبوب', top: 'برترین فیلم‌ها', toptv: 'برترین سریال‌ها',
-    free: 'فیلم رایگان و قانونی 🎟️', freetv: 'سریال رایگان و قانونی 📺',
+    free: 'فیلم رایگان و قانونی 🎟️', freetv: 'سریال رایگان و قانونی 📺', classics: 'کلاسیک‌های رایگان، بدون محدودیت کشوری 🎞️',
+    iaT: 'نسخه‌ی کامل، رایگان و قانونی', iaS: (pd) => `${pd ? 'مالکیت عمومی' : 'مجوز آزاد'} · Internet Archive · محدودیت کشوری نداره`, iaBtn: 'تماشا',
+    subT: 'زیرنویس پیدا کن', subS: 'جستجو در Subdl',
     whereT: 'کجا ببینم؟', freeT: 'پخش رایگان و قانونی', watchBtn: 'ببین',
     freeNote: 'با تبلیغ پخش میشه. برای باز شدن، VPN همون کشوری که کنارش نوشته رو روشن کن. زیرنویس انگلیسی معمولاً هست.',
     noFree: 'فعلاً پخش رایگان قانونی براش پیدا نشد.', subsT: 'با اشتراک', moreWays: 'همه‌ی راه‌های دیدن',
@@ -286,7 +298,9 @@ const I = {
   en: {
     sub: 'Movie & series guide', home: 'Home', tonight: 'Tonight', search: 'Search', list: 'My list',
     trending: 'Trending today', now: 'In theaters', onair: 'Airing now', popular: 'Popular movies', top: 'Top rated movies', toptv: 'Top rated series',
-    free: 'Free & legal movies 🎟️', freetv: 'Free & legal series 📺',
+    free: 'Free & legal movies 🎟️', freetv: 'Free & legal series 📺', classics: 'Free classics, no region lock 🎞️',
+    iaT: 'Full film, free & legal', iaS: (pd) => `${pd ? 'Public domain' : 'Open licence'} · Internet Archive · no region lock`, iaBtn: 'Watch',
+    subT: 'Find subtitles', subS: 'Search on Subdl',
     whereT: 'Where to watch', freeT: 'Free & legal streaming', watchBtn: 'Watch',
     freeNote: 'Ad-supported. Turn on a VPN for the country shown next to it. English subtitles are usually available.',
     noFree: 'No free legal stream found for this one yet.', subsT: 'With a subscription', moreWays: 'All ways to watch',
@@ -366,7 +380,7 @@ async function api(path, opts = {}) {
   return data;
 }
 
-const state = { me: null, tab: 'home', home: {}, list: null, scroll: {}, tonight: { step: 0, a: {} }, deck: [], searchQ: '', searchType: 'movie', genres: {}, listSeg: 'watch' };
+const state = { me: null, tab: 'home', home: {}, list: null, scroll: {}, tonight: { step: 0, a: {} }, deck: [], classics: {}, searchQ: '', searchType: 'movie', genres: {}, listSeg: 'watch' };
 
 // ---------- haptics & toast ----------
 const hap = (k) => { try { if (!tg || !tg.HapticFeedback) return; if (k === 'sel') tg.HapticFeedback.selectionChanged(); else if (k === 'ok') tg.HapticFeedback.notificationOccurred('success'); else tg.HapticFeedback.impactOccurred(k || 'light'); } catch (e) {} };
@@ -390,7 +404,7 @@ function wireImages(root) {
 // ---------- pieces ----------
 const typeLabel = (ty) => (ty === 'tv' ? t('tv') : t('movie'));
 function cardHtml(c, opts = {}) {
-  return `<button class="card press" data-open="${c.type}/${c.id}">
+  return `<button class="card press" data-open="${c.type}/${c.id}"${c.ia ? ` data-ia="${esc(c.ia)}"` : ''}>
     <div class="poster">${c.poster ? `<img class="fade" loading="lazy" decoding="async" alt="" src="${img(c.poster, 'w342')}">` : ''}
       ${c.rating ? `<span class="badge">${ic.star}${dec(c.rating)}</span>` : ''}
       ${opts.kind ? `<span class="kind">${typeLabel(c.type)}</span>` : ''}</div>
@@ -456,7 +470,9 @@ async function renderHome() {
   v.innerHTML = head
     + `<div class="hero" id="hero">${hero}</div><div class="dots" id="dots">${data.hero.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>`
     + `<button class="promo press" data-tab="tonight"><div class="promo-ico">🍿</div><div><b>${t('promoT')}</b><span>${t('promoS')}</span></div><span class="go">${ic.arrow}</span></button>`
-    + data.rows.map((r) => rowHtml(titles[r.key], r.items, { kind: r.key === 'trending' })).join('');
+    + data.rows.map((r) => rowHtml(titles[r.key], r.items, { kind: r.key === 'trending' })
+      + (r.key === 'freetv' ? `<div id="classics-slot">${state.classics[lang] ? rowHtml(t('classics'), state.classics[lang]) : ''}</div>` : '')).join('');
+  if (!state.classics[lang]) loadClassics();
   if (lang === 'en') v.querySelectorAll('.promo .go svg').forEach((s) => (s.style.transform = 'scaleX(-1)'));
   wireImages(v);
   const heroEl = document.getElementById('hero');
@@ -466,9 +482,24 @@ async function renderHome() {
   restoreScroll();
 }
 
+// Public-domain classics come from archive.org, so they load after the page.
+async function loadClassics() {
+  const l = lang;
+  if (state.classics[l]) return;
+  state.classics[l] = [];
+  try {
+    const res = await api('/classics');
+    state.classics[l] = res.items || [];
+  } catch (e) { state.classics[l] = null; return; }
+  const slot = document.getElementById('classics-slot');
+  if (!slot || l !== lang || state.tab !== 'home') return;
+  slot.innerHTML = rowHtml(t('classics'), state.classics[l]);
+  wireImages(slot);
+}
+
 // ---------- detail sheet ----------
 let detailToken = 0;
-async function openDetail(type, id) {
+async function openDetail(type, id, ia) {
   const sheet = document.getElementById('sheet');
   const my = ++detailToken;
   sheet.scrollTop = 0;
@@ -483,6 +514,15 @@ async function openDetail(type, id) {
   sheet.innerHTML = detailHtml(d);
   sheet._d = d;
   wireImages(sheet);
+  if (type === 'movie') loadArchive(d, ia, my);
+}
+async function loadArchive(d, ia, my) {
+  let res;
+  try { res = await api(`/archive/movie/${d.id}${ia ? `?ia=${encodeURIComponent(ia)}` : ''}`); } catch (e) { return; }
+  const slot = document.getElementById('ia-slot');
+  if (my !== detailToken || !slot || !res || !res.item) return;
+  const it = res.item;
+  slot.innerHTML = `<button class="ia press" data-link="${esc(it.url)}"><span class="ia-ico">🎞️</span><div><b>${t('iaT')}</b><span>${t('iaS', it.pd)}</span></div><span class="go">${t('iaBtn')}</span></button>`;
 }
 function closeDetail() {
   const sheet = document.getElementById('sheet');
@@ -522,7 +562,9 @@ function detailHtml(d) {
     ${actHtml('share', ic.share, t('share'), false)}
   </div>
   ${d.type === 'tv' && d.trailer ? `<div style="padding:0 var(--gap) 6px"><button class="btn ghost" style="width:100%;height:44px" data-act="trailer">${ic.play.replace('<svg', '<svg width="18" height="18"')}${t('trailer')}</button></div>` : ''}
+  <div id="ia-slot"></div>
   ${watchHtml(d.watch)}
+  ${d.subtitles ? `<button class="sublink press" data-link="${esc(d.subtitles)}">📝 <b>${t('subT')}</b><small>${t('subS')} ↗</small></button>` : ''}
   ${d.nextEpisode ? `<div class="next-ep">📅 ${t('nextEp', num(d.nextEpisode.season), num(d.nextEpisode.episode), fmtDate(d.nextEpisode.date))}</div>` : ''}
   ${d.overview ? `<div class="sec"><h4>${t('story')}</h4>${d.tagline ? `<div style="color:var(--amber-2);font-size:13.5px;margin-bottom:6px;font-weight:600">${esc(d.tagline)}</div>` : ''}<p class="overview" dir="${d.overviewLang === 'en' ? 'ltr' : 'auto'}">${esc(d.overview)}</p>${d.overviewLang === 'en' && lang === 'fa' ? `<div class="note">${t('faMissing')}</div>` : ''}${people}</div>` : (people ? `<div class="sec">${people}</div>` : '')}
   ${d.cast.length ? `<div class="sec"><h4>${t('cast')}</h4></div><div class="cast">${d.cast.map((p) => `<div class="person"><div class="ph">${p.photo ? `<img class="fade" loading="lazy" alt="" src="${img(p.photo, 'w185')}">` : ''}</div><b>${esc(p.name)}</b><span>${esc(p.role)}</span></div>`).join('')}</div>` : ''}
@@ -768,7 +810,7 @@ document.addEventListener('click', async (e) => {
   if (!el) return;
   const ds = el.dataset;
   if (ds.tab) { hap('sel'); if (document.getElementById('sheet').classList.contains('open')) closeDetail(); return go(ds.tab); }
-  if (ds.open) { const [ty, id] = ds.open.split('/'); hap('light'); history.replaceState(null, '', `#/t/${ty}/${id}`); return openDetail(ty, Number(id)); }
+  if (ds.open) { const [ty, id] = ds.open.split('/'); hap('light'); history.replaceState(null, '', `#/t/${ty}/${id}`); return openDetail(ty, Number(id), ds.ia); }
   if (ds.close !== undefined) return closeDetail();
   if (ds.link) { hap('light'); return openLink(ds.link); }
   if (ds.act) { const d = document.getElementById('sheet')._d; if (d && !el.disabled) doAction(ds.act, d, el); return; }

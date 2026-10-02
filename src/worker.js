@@ -61,6 +61,9 @@ async function api(req, env, ctx, url) {
   if (req.method === 'GET') {
     if (path === '/home') return json(await T.home(env, lang), 200, cacheable);
     if (path === '/genres') return json(await T.genres(env, lang), 200, cacheable);
+    if (path === '/classics') return json(await T.classicsRow(env, lang), 200, cacheable);
+    const am = path.match(/^\/archive\/movie\/(\d{1,9})$/);
+    if (am) return json(await T.archiveFor(env, Number(am[1]), url.searchParams.get('ia')), 200, cacheable);
     if (path === '/search') return json(await T.search(env, url.searchParams.get('q'), lang), 200, cacheable);
     if (path === '/discover') {
       const q = Object.fromEntries(url.searchParams);

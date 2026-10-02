@@ -1,6 +1,8 @@
 // TMDB access. Everything goes through the Worker so users in Iran never talk to
 // themoviedb.org or image.tmdb.org directly (both are often unreachable there).
 
+import * as IA from './archive.js';
+
 const API = 'https://api.themoviedb.org/3';
 
 export const LANGS = { fa: 'fa-IR', en: 'en-US' };
@@ -105,6 +107,11 @@ function pickVideo(videos) {
   return yt[0] ? yt[0].key : null;
 }
 
+const englishOf = (env, type, id) => tmdb(env, `/${type}/${id}`, { language: 'en-US', append_to_response: 'videos' }, 21600);
+
+// Subtitle search on Subdl (link checked to land on results, 2026-10-03).
+export const subtitleUrl = (q) => `https://subdl.com/search/${encodeURIComponent(q)}`;
+
 export async function title(env, type, id, lang) {
   if (type !== 'movie' && type !== 'tv') throw Object.assign(new Error('bad type'), { status: 400 });
   const language = LANGS[lang];
@@ -122,7 +129,7 @@ export async function title(env, type, id, lang) {
   let videoKey = pickVideo(d.videos);
   let overviewLang = lang;
   if (lang === 'fa' && (!overview || !videoKey)) {
-    const en = await tmdb(env, `/${type}/${id}`, { language: 'en-US', append_to_response: 'videos' }, 21600);
+    const en = await englishOf(env, type, id);
     if (!overview && en.overview) { overview = en.overview; overviewLang = 'en'; }
     if (!videoKey) videoKey = pickVideo(en.videos);
   }
@@ -171,6 +178,7 @@ export async function title(env, type, id, lang) {
     } : null,
     similar: similar.filter((c) => (seen.has(c.id) ? false : seen.add(c.id))).slice(0, 18),
     watch: watchFrom(d['watch/providers'] && d['watch/providers'].results, d.original_title || d.original_name || d.title || d.name || ''),
+    subtitles: subtitleUrl(d.original_title || d.original_name || d.title || d.name || ''),
   };
 }
 
@@ -315,4 +323,33 @@ export async function genres(env, lang) {
     return list.map((g) => ({ id: g.id, name: GENRES_FA[g.id] || g.name || enName.get(g.id) || '' })).filter((g) => g.name);
   };
   return { movie: await fix(m.genres || [], 'movie'), tv: await fix(t.genres || [], 'tv') };
+}
+
+// ---- free, legal, region-free copies on the Internet Archive ----
+// Fetched separately from the title page so a slow archive.org never holds it up.
+export async function archiveFor(env, id, hint) {
+  const en = await englishOf(env, 'movie', id);
+  const y = year(en.release_date);
+  if (!y) return { item: null };
+  let item = null;
+  if (hint) item = await IA.checkItem(env, String(hint), y);
+  if (!item) item = await IA.findFilm(env, { title: en.title, original: en.original_title, year: y, imdb: en.imdb_id });
+  return { item };
+}
+
+// Home row of public-domain classics that play free anywhere.
+export async function classicsRow(env, lang, max = 24) {
+  const list = (await IA.classics(env)).slice(0, max);
+  const found = await Promise.all(list.map(async (x) => {
+    try {
+      const d = await tmdb(env, '/search/movie', { query: x.title, primary_release_year: x.year, language: LANGS[lang], include_adult: 'false' }, 86400);
+      const hit = (d.results || []).find((r) => r.poster_path && Math.abs((year(r.release_date) || 0) - x.year) <= 1);
+      if (!hit) return null;
+      const c = card(hit, 'movie');
+      if (!(c.year && c.year <= IA.pdYear()) && !/publicdomain|creativecommons/i.test(x.license)) return null;
+      return { ...c, ia: x.id };
+    } catch { return null; }
+  }));
+  const seen = new Set();
+  return { items: found.filter((c) => c && (seen.has(c.id) ? false : seen.add(c.id))) };
 }

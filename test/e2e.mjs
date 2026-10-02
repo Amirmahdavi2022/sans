@@ -54,6 +54,16 @@ assert.equal(r.body.trailer, 'abc123'); assert.deepEqual(r.body.directors, ['Den
   assert.deepEqual(w.free[0].regions, ['US', 'CA']); assert.match(w.free[0].url, /^https:\/\/www\.justwatch\.com\/us\/search\?q=Dune/); ok('free provider links to JustWatch for its region');
   assert.match(w.free[1].url, /^https:\/\/watch\.plex\.tv\/search\?q=Dune/); ok('plex links to its own search');
   assert.deepEqual(w.subs.map((p) => p.name), ['Netflix']); assert.equal(w.subsRegion, 'US'); ok('subscription services, channel add-ons dropped'); }
+assert.match(r.body.subtitles, /^https:\/\/subdl\.com\/search\/Dune/); ok('subtitle search link');
+
+// --- Internet Archive ---
+r = await get('/api/archive/movie/1006?lang=fa'); assert.equal(r.status, 200);
+assert.equal(r.body.item && r.body.item.id, 'interstellar_cc'); assert.equal(r.body.item.url, 'https://archive.org/details/interstellar_cc'); assert.equal(r.body.item.pd, false); ok('archive: open-licence copy found, trailer skipped');
+r = await get('/api/archive/movie/1000?lang=fa'); assert.equal(r.body.item, null); ok('archive: copy of an in-copyright film without a licence is never shown');
+r = await get('/api/archive/movie/1006?lang=fa&ia=..%2Fevil'); assert.equal(r.body.item.id, 'interstellar_cc'); ok('archive: bad hint ignored');
+r = await get('/api/archive/movie/1000?lang=fa&ia=dune_full'); assert.equal(r.body.item, null); ok('archive: hint still has to be legal');
+r = await get('/api/classics?lang=fa'); assert.deepEqual(r.body.items.map((c) => [c.id, c.ia]), [[1006, 'interstellar_cc']]); ok('classics row: matched to TMDB, trailers and unmatched dropped');
+
 r = await get('/api/title/tv/1001?lang=fa'); assert.equal(r.body.seasons.length, 2); assert.equal(r.body.nextEpisode.episode, 6); assert.equal(r.body.overviewLang, 'fa'); ok('tv detail fields');
 assert.equal((await get('/api/title/person/1?lang=fa')).status, 404); ok('unknown type rejected');
 r = await get('/api/season/1001/2?lang=fa'); assert.equal(r.body.episodes.length, 6); ok('season episodes');

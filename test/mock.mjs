@@ -72,6 +72,30 @@ const server = http.createServer((req, res) => {
       if (tgm[1] === 'getChatMember') return send({ ok: true, result: { status: j.user_id === 999 ? 'left' : 'member' } });
       return send({ ok: true, result: {} });
     }
+    // Internet Archive
+    if (p === '/archive/advancedsearch.php') {
+      const q = (u.searchParams.get('q') || '').toLowerCase();
+      process.stdout.write(`IA search ${q}\n`);
+      const cc = 'http://creativecommons.org/licenses/by/4.0/';
+      if (q.includes('collection:(feature_films)')) return send({ response: { docs: [
+        { identifier: 'interstellar_cc', title: 'Interstellar (2014)', year: '2014', licenseurl: cc },
+        { identifier: 'old_trailer', title: 'Some Old Trailer', year: '1921' },
+        { identifier: 'nowhere_film', title: 'Nowhere Film', year: '1925' },
+      ] } });
+      if (q.includes('interstellar')) return send({ response: { docs: [
+        { identifier: 'interstellar_trailer', title: 'Interstellar Trailer', year: '2014', licenseurl: cc },
+        { identifier: 'interstellar_cc', title: 'Interstellar', year: '2014', licenseurl: cc },
+      ] } });
+      if (q.includes('dune')) return send({ response: { docs: [{ identifier: 'dune_full', title: 'Dune: Part Two', year: '2024' }] } });
+      return send({ response: { docs: [] } });
+    }
+    const iam = p.match(/^\/archive\/metadata\/(.+)$/);
+    if (iam) {
+      const id = decodeURIComponent(iam[1]);
+      if (id === 'interstellar_cc') return send({ metadata: { mediatype: 'movies', title: 'Interstellar', licenseurl: 'http://creativecommons.org/licenses/by/4.0/' }, files: [{ name: 'interstellar.mp4', format: 'h.264' }] });
+      if (id === 'dune_full') return send({ metadata: { mediatype: 'movies', title: 'Dune: Part Two' }, files: [{ name: 'dune.mp4' }] });
+      return send({});
+    }
     if (!u.searchParams.get('api_key')) return send({ status_message: 'no key' }, 401);
     process.stdout.write(`TMDB ${p}${u.search.replace(/api_key=[^&]+/, 'api_key=*')}\n`);
     const q = p.replace(/^\/3/, '');
@@ -81,6 +105,7 @@ const server = http.createServer((req, res) => {
     if (q === '/movie/now_playing') return send(list(10, 4, 'movie'));
     if (q === '/tv/on_the_air') return send(list(10, 1, 'tv'));
     if (q === '/tv/top_rated') return send(list(10, 3, 'tv'));
+    if (q === '/search/movie') return send(u.searchParams.get('query') === 'Interstellar' && u.searchParams.get('primary_release_year') === '2014' ? { results: [item(6, 'movie')] } : { results: [] });
     if (q === '/search/multi') return send(u.searchParams.get('query') === 'zzz' ? { results: [] } : list(7, 5));
     let m = q.match(/^\/discover\/(movie|tv)$/);
     if (m) return send(list(10, Number(u.searchParams.get('page') || 1) * 3, m[1]));
