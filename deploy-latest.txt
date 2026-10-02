@@ -1,0 +1,4 @@
+run: https://github.com/Amirmahdavi2022/sans/actions/runs/37007027522
+when: 2026-10-02T12:30:32Z
+
+Missing repo secrets: CF_API_TOKEN TMDB_KEY BOT_TOKEN — skipping deploy
