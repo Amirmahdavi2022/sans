@@ -1,5 +1,5 @@
 run: https://github.com/Amirmahdavi2022/sans/actions/runs/37020190682
-when: 2026-10-02T14:30:04Z
+when: 2026-10-02T14:31:52Z
 
 account resolved
 d1 database: 211b785d-41f0-4661-b736-6ca37fa97165
@@ -19,8 +19,8 @@ Note: if the execution fails to complete, your DB will return to its original st
 🌀 File already uploaded. Processing.
 🌀 Starting import...
 🌀 Processed 6 queries.
-🚣 Executed 6 queries in 3.79ms (0 rows read, 0 rows written)
-   Database is currently at bookmark 0000000c-00000004-000050f8-86c22caff9c83ee7024f6a3550328225.
+🚣 Executed 6 queries in 5.39ms (0 rows read, 0 rows written)
+   Database is currently at bookmark 0000000d-00000004-000050f8-7ab804c9ac512c339d375d415c25893a.
 [
   {
     "results": [
@@ -32,16 +32,16 @@ Note: if the execution fails to complete, your DB will return to its original st
       }
     ],
     "success": true,
-    "finalBookmark": "0000000c-00000004-000050f8-86c22caff9c83ee7024f6a3550328225",
+    "finalBookmark": "0000000d-00000004-000050f8-7ab804c9ac512c339d375d415c25893a",
     "meta": {
       "served_by": "v3-prod",
       "served_by_region": "ENAM",
       "served_by_colo": "IAD",
       "served_by_primary": true,
       "timings": {
-        "sql_duration_ms": 3.7927
+        "sql_duration_ms": 5.3947
       },
-      "duration": 3.7927,
+      "duration": 5.3947,
       "changes": 1,
       "last_row_id": 0,
       "changed_db": true,
@@ -58,7 +58,7 @@ bot: @SansGuidebot
  ⛅️ wrangler 4.147.0
 ────────────────────
 Total Upload: 181.15 KiB / gzip: 111.28 KiB
-Worker Startup Time: 1 ms
+Worker Startup Time: 2 ms
 Your Worker has access to the following bindings:
 Binding                            Resource                  
 env.DB (sans)                      D1 Database               
@@ -66,12 +66,12 @@ env.PUBLIC_URL ("(hidden)")        Environment Variable
 env.CHANNEL ("(hidden)")           Environment Variable      
 env.BOT_USERNAME ("(hidden)")      Environment Variable      
 
-Uploaded sans (2.58 sec)
-Deployed sans triggers (3.64 sec)
+Uploaded sans (2.08 sec)
+Deployed sans triggers (1.64 sec)
   sans.ctrjmc.xyz/* (zone name: ctrjmc.xyz)
   sans.ctrjmc.xyz (custom domain)
   schedule: 7 * * * *
-Current Version ID: d74f5b87-7328-439a-ab44-817354f8f4d8
+Current Version ID: e5db3785-bc5f-4845-8466-025c09cab52b
 
  ⛅️ wrangler 4.147.0
 ────────────────────
@@ -104,7 +104,7 @@ ok   home in English · East of Eden
 ok   persian search · پدرخوانده (1972)
 ok   english search · بریکینگ بد
 ok   tonight picks · 40 items
-ok   free legal streams for Night of the Living Dead · JustWatch TV[US,CA,GB,AU,DE,NL,FR,TR], Plex[US,CA,GB,AU,DE,NL,FR], Plex Channel[US,DE,NL,FR], Tubi TV[US,CA,GB,AU], Pluto TV[US,GB], Amazon Prime Video Free with Ads[US,GB], Cineverse[US,CA], Amazon MX Player[US,GB]
+ok   free legal streams for Night of the Living Dead · JustWatch TV[US,CA,GB,AU,NZ,IE,DE,AT,CH,NL,BE,FR,IT,ES,PT,SE,NO,DK,FI,TR,IN,BR,MX,AR,JP,KR,SG,PH,AE], Plex[US,CA,GB,AU,NZ,IE,DE,AT,CH,NL,BE,FR,IT,ES,PT,SE,NO,DK,FI,IN,BR,MX,AR,JP,KR,SG,PH], Plex Channel[US,DE,CH,NL,BE,FR,DK,IN,BR], Tubi TV[US,CA,GB,AU,IN,MX], Pluto TV[US,GB], Amazon Prime Video Free with Ads[US,GB], Public Domain Movies[US,AE], Cineverse[US,CA], Amazon MX Player[US,GB], NetMovies[BR]
 ok   home free row · 20 items, first: بازی تقلید
 ok   webhook set · https://sans.ctrjmc.xyz/tg/webhook pending=0
 
