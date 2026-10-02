@@ -1,0 +1,103 @@
+run: https://github.com/Amirmahdavi2022/sans/actions/runs/37063215948
+when: 2026-10-02T20:51:49Z
+
+ok	Night of the Living Dead 1968	-> Night.Of.The.Living.Dead_1080p pd=false "Night of the Living Dead"	921ms
+ok	The General 1926	-> The_General_Buster_Keaton pd=true "The General (complete & clearer) (1926)"	444ms
+ok	Nosferatu 1922	-> Nosferatu_most_complete_version_93_mins. pd=true "Nosferatu, eine Symphonie des Grauens (A Symphony of Horror)"	434ms
+ok	The Cabinet of Dr. Caligari 1920	-> NightOfTheLivingDeadwithSpanishSubtitles pd=true "The Cabinet Of Dr. Caligari (with spanish subtitles)"	440ms
+info	Modern Times 1936	-> modern-times-movie pd=false "Modern Times Movie"	587ms
+BAD	Interstellar 2014	-> interstellar.-2014.2014.1080p.-blu-ray.x-264.-yify_202604 pd=false "Interstellar. 2014.2014.1080p. Blu Ray.x 264. YIFY"	798ms
+ok	Dune: Part Two 2024	-> none	289ms
+ok	Inception 2010	-> none	323ms
+
+== classics() raw ==
+33 titles; first 15:
+  sex_madness | Sex Madness | 1938 | http://creativecommons.org/licenses/publicdomain/
+  charlie_chaplin_film_fest | Charlie Chaplin Festival | 1938 | http://creativecommons.org/licenses/publicdomain/
+  his_girl_friday | His Girl Friday | 1940 | http://creativecommons.org/licenses/publicdomain/
+  VoyagetothePlanetofPrehistoricWomen | Voyage to the Planet of Prehistoric Women | 1967 | http://creativecommons.org/licenses/publicdomain/
+  house_on_haunted_hill_ipod | House on Haunted Hill | 1959 | http://creativecommons.org/licenses/publicdomain/
+  JungleBook | Jungle Book | 1942 | http://creativecommons.org/licenses/publicdomain/
+  reefer_madness1938 | Reefer Madness | 1938 | http://creativecommons.org/licenses/publicdomain/
+  Sita_Sings_the_Blues | Sita Sings the Blues | 2008 | http://creativecommons.org/publicdomain/zero/1.0/
+  The_Pied_Piper_of_Hamelin | The Pied Piper of Hamelin | 1957 | http://creativecommons.org/licenses/publicdomain/
+  nazi_concentration_camps | Nazi Concentration Camps | 1945 | http://creativecommons.org/licenses/publicdomain/
+  BloodyPitOfHorror | Bloody Pit of Horror | 1965 | http://creativecommons.org/licenses/publicdomain/
+  abraham_lincoln | Abraham Lincoln | 1930 | http://creativecommons.org/licenses/publicdomain/
+  dressed_to_kill | Dressed To Kill | 1946 | http://creativecommons.org/licenses/publicdomain/
+  DiaryofaNudist | Diary of a Nudist | 1961 | http://creativecommons.org/publicdomain/mark/1.0/
+  suddenly | Suddenly | 1954 | http://creativecommons.org/licenses/publicdomain/
+
+== classics row (TMDB-matched) ==
+fa: 21 items in 1755ms
+  40091 Sex Madness (1938) poster=true ia=sex_madness
+  3085 His Girl Friday (1940) poster=true ia=his_girl_friday
+  15856 House on Haunted Hill (1959) poster=true ia=house_on_haunted_hill_ipod
+  23033 Jungle Book (1942) poster=true ia=JungleBook
+  37833 Tell Your Children (1938) poster=true ia=reefer_madness1938
+  20529 Sita Sings the Blues (2008) poster=true ia=Sita_Sings_the_Blues
+  117772 The Pied Piper of Hamelin (1957) poster=true ia=The_Pied_Piper_of_Hamelin
+  207659 Nazi Concentration Camps (1945) poster=true ia=nazi_concentration_camps
+  22758 Il boia scarlatto (1965) poster=true ia=BloodyPitOfHorror
+  130816 Abraham Lincoln (1930) poster=true ia=abraham_lincoln
+  20417 Dressed to Kill (1946) poster=true ia=dressed_to_kill
+  60991 Diary of a Nudist (1961) poster=true ia=DiaryofaNudist
+  18398 Suddenly (1954) poster=true ia=suddenly
+  20246 غریبه (1946) poster=true ia=TheStranger_0
+  76089 Tarzan's Revenge (1938) poster=true ia=tarzans_revenge
+  15263 مک لینتاک! (1963) poster=true ia=mclintok_widescreen
+  18649 My Favorite Brunette (1947) poster=true ia=my_favorite_brunette
+  42518 Gulliver's Travels (1939) poster=true ia=gullivers_travels1939
+  964 The Phantom of the Opera (1925) poster=true ia=ThePhantomoftheOpera
+  30266 20,000 Leagues Under the Sea (1916) poster=true ia=20000LeaguesUndertheSea
+  2981 The Lost World (1925) poster=true ia=lost_world
+en: 21 items in 205ms
+  40091 Sex Madness (1938) poster=true ia=sex_madness
+  3085 His Girl Friday (1940) poster=true ia=his_girl_friday
+  15856 House on Haunted Hill (1959) poster=true ia=house_on_haunted_hill_ipod
+  23033 Jungle Book (1942) poster=true ia=JungleBook
+  37833 Tell Your Children (1938) poster=true ia=reefer_madness1938
+  20529 Sita Sings the Blues (2008) poster=true ia=Sita_Sings_the_Blues
+  117772 The Pied Piper of Hamelin (1957) poster=true ia=The_Pied_Piper_of_Hamelin
+  207659 Nazi Concentration Camps (1945) poster=true ia=nazi_concentration_camps
+  22758 Bloody Pit of Horror (1965) poster=true ia=BloodyPitOfHorror
+  130816 Abraham Lincoln (1930) poster=true ia=abraham_lincoln
+  20417 Dressed to Kill (1946) poster=true ia=dressed_to_kill
+  60991 Diary of a Nudist (1961) poster=true ia=DiaryofaNudist
+  18398 Suddenly (1954) poster=true ia=suddenly
+  20246 The Stranger (1946) poster=true ia=TheStranger_0
+  76089 Tarzan's Revenge (1938) poster=true ia=tarzans_revenge
+  15263 McLintock! (1963) poster=true ia=mclintok_widescreen
+  18649 My Favorite Brunette (1947) poster=true ia=my_favorite_brunette
+  42518 Gulliver's Travels (1939) poster=true ia=gullivers_travels1939
+  964 The Phantom of the Opera (1925) poster=true ia=ThePhantomoftheOpera
+  30266 20,000 Leagues Under the Sea (1916) poster=true ia=20000LeaguesUndertheSea
+  2981 The Lost World (1925) poster=true ia=lost_world
+
+== every classics card must resolve to a legal copy via its hint ==
+ok	Sex Madness -> sex_madness
+ok	His Girl Friday -> his_girl_friday
+ok	House on Haunted Hill -> house_on_haunted_hill_ipod
+ok	Jungle Book -> JungleBook
+ok	Tell Your Children -> reefer_madness1938
+ok	Sita Sings the Blues -> Sita_Sings_the_Blues
+ok	The Pied Piper of Hamelin -> The_Pied_Piper_of_Hamelin
+ok	Nazi Concentration Camps -> nazi_concentration_camps
+ok	Bloody Pit of Horror -> BloodyPitOfHorror
+ok	Abraham Lincoln -> abraham_lincoln
+ok	Dressed to Kill -> dressed_to_kill
+ok	Diary of a Nudist -> DiaryofaNudist
+ok	Suddenly -> suddenly
+ok	The Stranger -> TheStranger_0
+ok	Tarzan's Revenge -> tarzans_revenge
+ok	McLintock! -> mclintok_widescreen
+ok	My Favorite Brunette -> my_favorite_brunette
+ok	Gulliver's Travels -> gullivers_travels1939
+ok	The Phantom of the Opera -> ThePhantomoftheOpera
+ok	20,000 Leagues Under the Sea -> 20000LeaguesUndertheSea
+ok	The Lost World -> lost_world
+
+== subtitle link ==
+403 https://subdl.com/search/Night%20of%20the%20Living%20Dead (403 from a datacenter runner is Cloudflare bot protection, not a broken link)
+
+1 problems, 28622ms total
