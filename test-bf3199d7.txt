@@ -1,0 +1,41 @@
+run: https://github.com/Amirmahdavi2022/sans/actions/runs/37007027522
+when: 2026-10-02T12:30:14Z
+
+
+> sans@1.0.0 test
+> bash test/run.sh
+
+ok app page served
+ok persian font served as real woff2
+ok image proxy
+ok image proxy rejects unknown size
+ok image proxy rejects odd paths
+ok no initData → 401
+ok tampered initData → 401
+ok stale initData → 401
+ok /me with valid initData
+ok non-member flagged on /me
+ok non-member blocked from content
+ok home rows
+ok persian overview missing → english fallback
+ok movie detail fields
+ok tv detail fields
+ok unknown type rejected
+ok season episodes
+ok search
+ok search empty
+ok tonight discover
+ok genres
+ok add to watchlist
+ok seen removes it from watchlist
+ok list endpoint
+ok bad id rejected
+ok remove
+ok follow series
+ok follow appears in list
+ok language saved
+ok webhook needs secret
+ok webhook accepts /start
+
+31 checks passed
+ok alert sent exactly once
