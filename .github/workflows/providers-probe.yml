@@ -2,6 +2,10 @@ name: providers probe
 
 on:
   workflow_dispatch:
+    inputs:
+      script:
+        description: probe script in scripts/ (without .mjs)
+        default: providers-probe
 
 permissions:
   contents: write
@@ -17,9 +21,9 @@ jobs:
       - name: Probe
         env:
           TMDB_KEY: ${{ secrets.TMDB_KEY }}
-        run: node scripts/providers-probe.mjs 2>&1 | tee probe-report.txt
+        run: node scripts/${{ inputs.script || 'providers-probe' }}.mjs 2>&1 | tee probe-report.txt
       - name: Save report
         if: always()
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: bash scripts/save-report.sh providers probe-report.txt
+        run: bash scripts/save-report.sh ${{ inputs.script || 'providers-probe' }} probe-report.txt
