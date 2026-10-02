@@ -1,0 +1,25 @@
+name: providers probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Probe
+        env:
+          TMDB_KEY: ${{ secrets.TMDB_KEY }}
+        run: node scripts/providers-probe.mjs 2>&1 | tee probe-report.txt
+      - name: Save report
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash scripts/save-report.sh providers probe-report.txt
