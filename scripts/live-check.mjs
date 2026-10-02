@@ -95,6 +95,13 @@ line(disc.items && disc.items.length > 0, 'tonight picks', disc.items ? `${disc.
 
 const nl = await getJson(`${BASE}/api/title/movie/10331?lang=fa`, H);
 line(nl.watch && nl.watch.free.length > 0, 'free legal streams for Night of the Living Dead', nl.watch ? nl.watch.free.map((p) => `${p.name}[${p.regions.join(',')}]`).join(', ') : why(nl));
+line(typeof nl.subtitles === 'string' && nl.subtitles.startsWith('https://subdl.com/search/'), 'subtitle link', nl.subtitles || why(nl));
+const ia = await getJson(`${BASE}/api/archive/movie/10331?lang=fa`, H);
+line(ia.item && ia.item.url, 'internet archive copy for Night of the Living Dead', ia.item ? ia.item.url : why(ia));
+const ia2 = await getJson(`${BASE}/api/archive/movie/155?lang=fa`, H);
+line(ia2 && 'item' in ia2 && ia2.item === null, 'no archive copy shown for The Dark Knight', ia2.item ? ia2.item.url : 'none');
+const cl = await getJson(`${BASE}/api/classics?lang=fa`, H);
+line(cl.items && cl.items.length >= 5 && cl.items.every((c) => c.ia && c.poster), 'classics row', cl.items ? `${cl.items.length} items, first: ${cl.items[0] && cl.items[0].title}` : why(cl));
 const hm = await getJson(`${BASE}/api/home?lang=fa`, H);
 const fr = hm.rows && hm.rows.find((r) => r.key === 'free');
 line(fr && fr.items.length > 0, 'home free row', fr ? `${fr.items.length} items, first: ${fr.items[0] && fr.items[0].title}` : why(hm));
