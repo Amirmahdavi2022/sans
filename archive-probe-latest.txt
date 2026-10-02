@@ -1,0 +1,126 @@
+run: https://github.com/Amirmahdavi2022/sans/actions/runs/37062492295
+when: 2026-10-02T20:45:47Z
+
+== known public-domain films ==
+
+Night of the Living Dead 1968 -> tmdb "Night of the Living Dead" 1968 tt0063350
+  by imdb: 0 found
+  by title+year: 24 found
+    Night.Of.The.Living.Dead_1080p | Night of the Living Dead | 1968 | dl 313300 | 
+    night_of_the_living_dead_dvd | Night of the Living Dead | 1968 | dl 304193 | 
+    Night_Of_The_Living_Dead_raw_HD_WS | Night Of The Living Dead | 1968 | dl 138240 | 
+    NightOfTheLivingDead-MPEG | Night Of The Living Dead | 1968 | dl 132466 | 
+    night_of_the_living_dead_ipod | Night of the Living Dead iPod and Flash video versions | 1968 | dl 56666 | 
+  files: {"n":26,"sample":["NightOfTheLivingDead.mp4 596808390B h.264","NightOfTheLivingDead.ogv 425336522B Ogg Video","NightOfTheLivingDead_1080p.mp4 597585042B h.264"],"rights":"http://creativecommons.org/licenses/publicdomain/"}
+
+The General 1926 -> tmdb "The General" 1926 tt0017925
+  by imdb: 0 found
+  by title+year: 19 found
+    The_General_Buster_Keaton | The General (complete & clearer) (1926) | 1926 | dl 271167 | 
+    TheGeneral | The General | 1927 | dl 249233 | 
+    Buster_Keaton_The_General | The General | 1927 | dl 157253 | 
+    the_general_ipod | The General | 1927 | dl 67340 | 
+    TheGeneral_201312 | "The General" (1926) starring Buster Keaton | 1926 | dl 32043 | 
+  files: {"n":3,"sample":["The_General.mp4 412400222B h.264","The_General.ogv 304061885B Ogg Video","The_General_512kb.mp4 302790246B 512Kb MPEG4"],"rights":"http://creativecommons.org/licenses/publicdomain/"}
+
+Nosferatu 1922 -> tmdb "Nosferatu" 1922 tt0013442
+  by imdb: 0 found
+  by title+year: 13 found
+    Nosferatu_most_complete_version_93_mins. | Nosferatu, eine Symphonie des Grauens (A Symphony of Horror) | 1922 | dl 433253 | 
+    Nosferatu_DVD_quality | Nosferatu_DVD_quality | 1922 | dl 256804 | 
+    CEP177 | Nosferatu - The Vampire Aboard Ship | 1922 | dl 19423 | 
+    nosferatu2 | Nosferatu: Hutter Accidently Cuts His Finger - Orlock Reacts | 1922 | dl 6725 | 
+    nosferatu-1922_202504 | Nosferatu (1922) | 1922 | dl 5941 | 
+  by original title: 4 found
+    Nosferatu_most_complete_version_93_mins. | Nosferatu, eine Symphonie des Grauens (A Symphony of Horror) | 1922 | dl 433253 | 
+    nosferatu_eine_symphonie_des_grauens | Nosferatu: Eine Symphonie des Grauens | 1922 | dl 2975 | 
+    nosferatu_202308 | Nosferatu, eine Symphonie des Grauens | 1922 | dl 300 | 
+    nosferatu-1922_202509 | Nosferatu – Eine Symphonie des Grauens | 1922 | dl 289 | 
+  files: {"n":2,"sample":["Nosferatu_1922_Symphony_of_Horror.ogv 401195646B Ogg Video","Nosferatu_1922_Symphony_of_Horror_512kb.mp4 395416378B 512Kb MPEG4"],"rights":""}
+
+The Cabinet of Dr. Caligari 1920 -> tmdb "The Cabinet of Dr. Caligari" 1920 tt0010323
+  by imdb: 1 found
+    silent-the-cabinet-of-dr-caligari | The Cabinet of Dr. Caligari | 1921 | dl 4104 | urn:imdb:tt0010323,urn:rottentomatoes:1003361-cabinet_of_dr_caligari
+  by title+year: 7 found
+    DasKabinettdesDoktorCaligariTheCabinetofDrCaligari | Das Kabinett des Doktor Caligari ( The Cabinet of Dr. Caligari ) | 1919 | dl 532444 | 
+    silent-the-cabinet-of-dr-caligari | The Cabinet of Dr. Caligari | 1921 | dl 4104 | urn:imdb:tt0010323,urn:rottentomatoes:1003361-cabinet_of_dr_caligari
+    turner_video_5 | The Cabinet of Dr. Caligari | 1920 | dl 3184 | 
+    turner_video_391347 | The Cabinet of Dr. Caligari | 1920 | dl 1966 | 
+    turner_video_47517 | The Cabinet of Dr. Caligari | 1920 | dl 524 | 
+  by original title: 3 found
+    DasKabinettdesDoktorCaligariTheCabinetofDrCaligari | Das Kabinett des Doktor Caligari ( The Cabinet of Dr. Caligari ) | 1919 | dl 532444 | 
+    Gabinet.doktora.Caligari.1920Rez.RobertWiene | Gabinet doktora Caligari (Das Cabinet des Dr. Caligari) - Niemcy, 1920 - reż. Robert Wiene | 1920 | dl 6289 | 
+    the.-cabinet.-of.-dr.-caligari.-1080p | Das Cabinet Des Dr. Caligari | 1920 | dl 492 | 
+  files: {"n":1,"sample":["The Cabinet of Dr. Caligari.mp4 103343624B h.264"],"rights":""}
+
+It's a Wonderful Life 1946 -> tmdb "It's a Wonderful Life" 1946 tt0038650
+  by imdb: 0 found
+  by title+year: 0 found
+
+His Girl Friday 1940 -> tmdb "It Happened One Night" 1934 tt0025316
+  by imdb: 0 found
+  by title+year: 6 found
+    ItHappenedOneNightTrailer | It Happened One Night trailer | 1934 | dl 4948 | 
+    it-happened-one-night-1934_202501 | IT HAPPENED ONE NIGHT 1934 - CLARK GABLE | 1934 | dl 624 | 
+    turner_video_12212 | It Happened One Night | 1934 | dl 434 | 
+    turner_video_12211 | It Happened One Night | 1934 | dl 289 | 
+    turner_video_109162 | It Happened One Night | 1934 | dl 246 | 
+  files: {"n":3,"sample":["It_Happened_One_Night_trailer.mp4 22145835B MPEG4","It_Happened_One_Night_trailer.ogv 6807506B Ogg Video","It_Happened_One_Night_trailer_512kb.mp4 5784247B 512Kb MPEG4"],"rights":"http://creativecommons.org/licenses/publicdomain/"}
+
+Charade 1963 -> tmdb "Ran" 1985 tt0089881
+  by imdb: 0 found
+  by title+year: 0 found
+  by original title: 0 found
+
+Plan 9 from Outer Space -> tmdb "Ministry of Fear" 1944 tt0037075
+  by imdb: 0 found
+  by title+year: 4 found
+    ministry-of-fear-1944 | Ministry Of Fear ( 1944) Directed By Fritz Lang, Starring Ray Milland, Dan Duryea, Margaret Reynolds | 1944 | dl 19715 | 
+    Ministry_of_Fear_Original_Trailer | Ministry of Fear (Original Trailer) | 1944 | dl 6741 | 
+    1944-ministry-of-fear-el-ministerio-del-miedo-fritz-lang-vose | 1944 - Ministry of Fear - El ministerio del miedo - Fritz Lang - VOSE | 1944 | dl 4205 | 
+    ministry-of-fear-1944-legendado | "Quando Descem as Trevas" ("Ministry of Fear"), de Fritz Lang, com legendas em português | 1944 | dl 2359 | 
+  files: {"n":2,"sample":["Ministry of Fear (1944) Directed by Fritz Lang, Starring Ray Milland, Dan Duryea, Margaret Reynolds.ia.mp4 732647415B h.264 IA","Ministry of Fear (1944) Directed by Fritz Lang, Starring Ray Milland, Dan Duryea, Margaret Reynolds.mp4 732647415B MPEG4"],"rights":""}
+
+== false-positive check: popular modern films (should be 0) ==
+Spider-Man: Brand New Day 2026: imdb 0, title 2 -> spider-man-brand-new-day-trailer-1-2k-prores,spider-man-brand-new-day-trailer-2-2k-prores
+Renegade Immortal: Battle of the Immortal Slayer 2026: imdb 0, title 0
+Resident Evil 2026: imdb 0, title 0
+Coyote vs. Acme 2026: imdb 0, title 0
+The Odyssey 2026: imdb 0, title 3 -> the-odyssey-imax-trailer-3-4k-prores,the-odyssey-trailer-2-2k-prores,the-odyssey-trailer-4-2k-prores
+The Fix 2026: imdb 0, title 0
+Runner 2026: imdb 0, title 0
+The End of Oak Street 2026: imdb 0, title 0
+After Impact 2026: imdb 0, title 0
+The Love Hypothesis 2026: imdb 0, title 0
+The Mongoose 2026: imdb 0, title 0
+Colony 2026: imdb 0, title 0
+popular with any hit: 2/12
+
+== coverage: TMDB top-rated pre-1960 films ==
+12 Angry Men 1957: imdb 0, title 4 -> 12AngryMen1957Trailer
+Snow White and the Seven Dwarfs 1938: imdb 0, title 0
+Rear Window 1954: imdb 0, title 0
+Cinderella 1950: imdb 0, title 0
+Vertigo 1958: imdb 0, title 1 -> VertigoTheatricalTrailer
+Alice in Wonderland 1951: imdb 0, title 0
+Pinocchio 1940: imdb 0, title 0
+The Wizard of Oz 1939: imdb 0, title 3 -> wizard_of_oz_1949_reissue_trailers
+Casablanca 1943: imdb 0, title 0
+Citizen Kane 1941: imdb 0, title 0
+Bambi 1942: imdb 0, title 0
+Peter Pan 1953: imdb 0, title 0
+Lady and the Tramp 1955: imdb 0, title 0
+Sleeping Beauty 1959: imdb 0, title 0
+Dumbo 1941: imdb 0, title 0
+It's a Wonderful Life 1946: imdb 0, title 0
+North by Northwest 1959: imdb 0, title 0
+Gone with the Wind 1939: imdb 0, title 0
+Seven Samurai 1954: imdb 0, title 0
+Modern Times 1936: imdb 0, title 0
+old films with a hit: 3/20
+
+== Persian subtitle links ==
+403 https://www.opensubtitles.org/en/search/sublanguageid-per/imdbid-0063350  len 0 persian-mention false
+403 https://subdl.com/search/night%20of%20the%20living%20dead  len 0 persian-mention false
+403 https://api.subdl.com/api/v1/subtitles?imdb_id=tt0063350&languages=FA  len 0 persian-mention false
+200 https://www.subtitlecat.com/index.php?search=night+of+the+living+dead  len 87275 persian-mention true
