@@ -3,7 +3,13 @@ main = "src/worker.js"
 compatibility_date = "2026-09-01"
 workers_dev = false
 
-routes = [{ pattern = "sans.ctrjmc.xyz", custom_domain = true }]
+# The custom domain gives the hostname its DNS record and certificate. The zone
+# also carries a wildcard route (*.ctrjmc.xyz/*) for another Worker, and routes
+# run before custom domains, so a more specific route is added for this host.
+routes = [
+  { pattern = "sans.ctrjmc.xyz", custom_domain = true },
+  { pattern = "sans.ctrjmc.xyz/*", zone_name = "ctrjmc.xyz" },
+]
 
 [triggers]
 crons = ["7 * * * *"]
