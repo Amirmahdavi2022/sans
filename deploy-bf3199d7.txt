@@ -1,4 +1,120 @@
-run: https://github.com/Amirmahdavi2022/sans/actions/runs/37007027522
-when: 2026-10-02T12:30:32Z
+run: https://github.com/Amirmahdavi2022/sans/actions/runs/37008030266
+when: 2026-10-02T12:40:41Z
 
-Missing repo secrets: CF_API_TOKEN TMDB_KEY BOT_TOKEN — skipping deploy
+account resolved
+
+ ⛅️ wrangler 4.147.0
+────────────────────
+✅ Successfully created DB 'sans' in region ENAM
+Created your new D1 database.
+
+To access your new D1 Database in your Worker, add the following snippet to your configuration file:
+[[d1_databases]]
+binding = "sans"
+database_name = "sans"
+database_id = "211b785d-41f0-4661-b736-6ca37fa97165"
+
+d1 database: 211b785d-41f0-4661-b736-6ca37fa97165
+
+ ⛅️ wrangler 4.147.0
+────────────────────
+Resource location: remote 
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m⚠️ This process may take some time, during which your D1 database will be unavailable to serve queries.[0m
+
+
+🌀 Executing on remote database sans (211b785d-41f0-4661-b736-6ca37fa97165):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+Note: if the execution fails to complete, your DB will return to its original state and you can safely retry.
+├ Checking if file needs uploading
+│
+├ 🌀 Uploading 211b785d-41f0-4661-b736-6ca37fa97165.15ed7d2d2e712edd.sql
+│ 🌀 Uploading complete.
+│
+🌀 Starting import...
+🌀 Processed 6 queries.
+🚣 Executed 6 queries in 3.51ms (8 rows read, 12 rows written)
+   Database is currently at bookmark 00000000-0000000c-000050f8-6e0b23057294d394966f060fc9aa25fb.
+[
+  {
+    "results": [
+      {
+        "Total queries executed": 6,
+        "Rows read": 8,
+        "Rows written": 12,
+        "Database size (MB)": "0.05"
+      }
+    ],
+    "success": true,
+    "finalBookmark": "00000000-0000000c-000050f8-6e0b23057294d394966f060fc9aa25fb",
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "ENAM",
+      "served_by_colo": "IAD",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 3.5121
+      },
+      "duration": 3.5121,
+      "changes": 1,
+      "last_row_id": 0,
+      "changed_db": true,
+      "size_after": 45056,
+      "rows_read": 8,
+      "rows_written": 12,
+      "num_tables": 4,
+      "total_attempts": 1
+    }
+  }
+]
+bot: @SansGuidebot
+::add-mask::e0c8d745de22c13b8e852f58fbd00ec8221c7cd0fe940f5f
+
+ ⛅️ wrangler 4.147.0
+────────────────────
+Total Upload: 171.56 KiB / gzip: 108.66 KiB
+Worker Startup Time: 2 ms
+Your Worker has access to the following bindings:
+Binding                            Resource                  
+env.DB (sans)                      D1 Database               
+env.PUBLIC_URL ("(hidden)")        Environment Variable      
+env.CHANNEL ("(hidden)")           Environment Variable      
+env.BOT_USERNAME ("(hidden)")      Environment Variable      
+
+Uploaded sans (1.11 sec)
+Deployed sans triggers (1.56 sec)
+  sans.ctrjmc.xyz (custom domain)
+  schedule: 7 * * * *
+Current Version ID: 69c82564-0e09-49bb-a63a-79ad49d2fd41
+
+ ⛅️ wrangler 4.147.0
+────────────────────
+🌀 Processing the secrets for the Worker "sans"
+✨ Successfully created secret for key: TMDB_KEY
+✨ Successfully created secret for key: BOT_TOKEN
+✨ Successfully created secret for key: WEBHOOK_SECRET
+
+Finished processing secrets file:
+✨ 3 secrets successfully created
+ok   setWebhook
+ok   setChatMenuButton
+ok   setMyCommands
+ok   setMyCommands
+ok   setMyShortDescription
+ok   setMyShortDescription
+ok   setMyDescription
+ok   setMyDescription
+
+<anonymous_script>:1
+
+
+SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:5895:19)
+    at successSteps (node:internal/deps/undici/undici:5876:27)
+    at fullyReadBody (node:internal/deps/undici/undici:4768:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async consumeBody (node:internal/deps/undici/undici:5885:7)
+    at async file:///home/runner/work/sans/sans/scripts/live-check.mjs:78:11
+
+Node.js v22.23.3
