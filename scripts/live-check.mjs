@@ -93,6 +93,11 @@ line(s2.items && s2.items.length > 0, 'english search', s2.items && s2.items[0] 
 const disc = await getJson(`${BASE}/api/discover?type=movie&mood=mind&time=&shuffle=1&lang=fa`, H);
 line(disc.items && disc.items.length > 0, 'tonight picks', disc.items ? `${disc.items.length} items` : why(disc));
 
+const nl = await getJson(`${BASE}/api/title/movie/10331?lang=fa`, H);
+line(nl.watch && nl.watch.free.length > 0, 'free legal streams for Night of the Living Dead', nl.watch ? nl.watch.free.map((p) => `${p.name}[${p.regions.join(',')}]`).join(', ') : why(nl));
+const hm = await getJson(`${BASE}/api/home?lang=fa`, H);
+const fr = hm.rows && hm.rows.find((r) => r.key === 'free');
+line(fr && fr.items.length > 0, 'home free row', fr ? `${fr.items.length} items, first: ${fr.items[0] && fr.items[0].title}` : why(hm));
 const wh = await tg('getWebhookInfo');
 line(wh.ok && wh.result.url === `${BASE}/tg/webhook`, 'webhook set', wh.ok ? `${wh.result.url} pending=${wh.result.pending_update_count}${wh.result.last_error_message ? ' last_error=' + wh.result.last_error_message : ''}` : wh.description);
 

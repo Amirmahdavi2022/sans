@@ -52,18 +52,23 @@ export function cards(list, forceType) {
 
 export async function home(env, lang) {
   const language = LANGS[lang];
-  const [trending, popular, top, now, onAir, topTv] = await Promise.all([
+  const [trending, popular, top, now, onAir, topTv, free] = await Promise.all([
     tmdb(env, '/trending/all/day', { language }, 1800),
     tmdb(env, '/movie/popular', { language, region: 'US' }, 3600),
     tmdb(env, '/movie/top_rated', { language }, 21600),
     tmdb(env, '/movie/now_playing', { language, region: 'US' }, 3600),
     tmdb(env, '/tv/on_the_air', { language }, 3600),
     tmdb(env, '/tv/top_rated', { language }, 21600),
+    tmdb(env, '/discover/movie', {
+      language, watch_region: 'US', with_watch_monetization_types: 'ads',
+      sort_by: 'popularity.desc', 'vote_count.gte': 300, 'vote_average.gte': 6.3,
+    }, 21600),
   ]);
   return {
     hero: cards(trending.results).filter((c) => c.backdrop).slice(0, 6),
     rows: [
       { key: 'trending', items: cards(trending.results) },
+      { key: 'free', items: cards(free.results, 'movie') },
       { key: 'now', items: cards(now.results, 'movie') },
       { key: 'onair', items: cards(onAir.results, 'tv') },
       { key: 'popular', items: cards(popular.results, 'movie') },
@@ -84,7 +89,7 @@ function pickVideo(videos) {
 export async function title(env, type, id, lang) {
   if (type !== 'movie' && type !== 'tv') throw Object.assign(new Error('bad type'), { status: 400 });
   const language = LANGS[lang];
-  const append = 'credits,videos,similar,recommendations';
+  const append = 'credits,videos,similar,recommendations,watch/providers';
   const d = await tmdb(env, `/${type}/${id}`, {
     language,
     append_to_response: append,
@@ -146,7 +151,63 @@ export async function title(env, type, id, lang) {
       date: d.next_episode_to_air.air_date,
     } : null,
     similar: similar.filter((c) => (seen.has(c.id) ? false : seen.add(c.id))).slice(0, 18),
+    watch: watchFrom(d['watch/providers'] && d['watch/providers'].results, d.original_title || d.original_name || d.title || d.name || ''),
   };
+}
+
+
+// ---- where to watch (data from JustWatch via TMDB) ----
+// "ads" means genuinely free with ads. TMDB's "free" bucket also holds some paid
+// services by mistake (Paramount+, Prime in some countries, measured 2026-10-02),
+// so from "free" only services checked to be really free are kept.
+const FREE_OK = new Set([191, 212, 638, 2285, 2409, 2239, 537, 2665]);
+const NOT_FREE = new Set([2303, 1853, 2616, 531, 2304, 119, 9, 486]);
+export const WATCH_REGIONS = ['US', 'CA', 'GB', 'AU', 'DE', 'NL', 'FR', 'TR'];
+const JW_PATH = { US: 'us', CA: 'ca', GB: 'uk', AU: 'au', DE: 'de', NL: 'nl', FR: 'fr', TR: 'tr' };
+const PLEX = new Set([538, 2077]);
+
+export function justwatchUrl(region, query) {
+  return `https://www.justwatch.com/${JW_PATH[region] || 'us'}/search?q=${encodeURIComponent(query)}`;
+}
+
+export function watchFrom(results, query) {
+  const res = results || {};
+  const free = new Map();
+  for (const region of WATCH_REGIONS) {
+    const r = res[region];
+    if (!r) continue;
+    const add = (p) => {
+      if (NOT_FREE.has(p.provider_id)) return;
+      const e = free.get(p.provider_id) || { id: p.provider_id, name: p.provider_name, logo: p.logo_path || null, regions: [], order: p.display_priority || 99 };
+      if (!e.regions.includes(region)) e.regions.push(region);
+      free.set(p.provider_id, e);
+    };
+    (r.ads || []).forEach(add);
+    (r.free || []).filter((p) => FREE_OK.has(p.provider_id)).forEach(add);
+  }
+  const list = [...free.values()]
+    .sort((a, b) => b.regions.length - a.regions.length || a.order - b.order)
+    .slice(0, 8)
+    .map((e) => ({
+      id: e.id, name: e.name, logo: e.logo, regions: e.regions,
+      // Plex search was checked to land on the title; for everything else the
+      // JustWatch page lists the direct "watch" button of each service.
+      url: PLEX.has(e.id) ? `https://watch.plex.tv/search?q=${encodeURIComponent(query)}` : justwatchUrl(e.regions[0], query),
+    }));
+  let subs = [];
+  let subsRegion = null;
+  for (const region of WATCH_REGIONS) {
+    const f = (res[region] && res[region].flatrate) || [];
+    if (f.length) {
+      subsRegion = region;
+      const seen = new Set();
+      subs = f.filter((p) => !/Amazon Channel|Apple TV channel|Roku Premium Channel/i.test(p.provider_name))
+        .filter((p) => (seen.has(p.provider_name.split(' ')[0]) ? false : seen.add(p.provider_name.split(' ')[0])))
+        .slice(0, 5).map((p) => ({ id: p.provider_id, name: p.provider_name, logo: p.logo_path || null }));
+      break;
+    }
+  }
+  return { free: list, subs, subsRegion, more: justwatchUrl(subsRegion || (list[0] && list[0].regions[0]) || 'US', query) };
 }
 
 export async function season(env, id, n, lang) {

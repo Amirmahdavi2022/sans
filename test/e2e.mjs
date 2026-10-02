@@ -44,11 +44,16 @@ r = await get('/api/home?lang=fa', H(outsider)); assert.equal(r.status, 403); as
 
 // --- content ---
 r = await get('/api/home?lang=fa'); assert.equal(r.status, 200);
-assert.ok(r.body.hero.length > 0 && r.body.hero.every((c) => c.backdrop)); assert.equal(r.body.rows.length, 6);
+assert.ok(r.body.hero.length > 0 && r.body.hero.every((c) => c.backdrop)); assert.equal(r.body.rows.length, 7); assert.equal(r.body.rows[1].key, 'free');
 assert.ok(r.body.rows.find((x) => x.key === 'onair').items.every((c) => c.type === 'tv')); ok('home rows');
 r = await get('/api/title/movie/1000?lang=fa'); assert.equal(r.status, 200);
 assert.equal(r.body.overviewLang, 'en'); assert.ok(r.body.overview.length > 0); ok('persian overview missing → english fallback');
 assert.equal(r.body.trailer, 'abc123'); assert.deepEqual(r.body.directors, ['Denis Villeneuve']); assert.equal(r.body.runtime, 166); ok('movie detail fields');
+{ const w = r.body.watch;
+  assert.deepEqual(w.free.map((p) => p.name), ['Tubi TV', 'Plex', 'Public Domain Movies']); ok('free providers: ads kept, mislabelled paid dropped');
+  assert.deepEqual(w.free[0].regions, ['US', 'CA']); assert.match(w.free[0].url, /^https:\/\/www\.justwatch\.com\/us\/search\?q=Dune/); ok('free provider links to JustWatch for its region');
+  assert.match(w.free[1].url, /^https:\/\/watch\.plex\.tv\/search\?q=Dune/); ok('plex links to its own search');
+  assert.deepEqual(w.subs.map((p) => p.name), ['Netflix']); assert.equal(w.subsRegion, 'US'); ok('subscription services, channel add-ons dropped'); }
 r = await get('/api/title/tv/1001?lang=fa'); assert.equal(r.body.seasons.length, 2); assert.equal(r.body.nextEpisode.episode, 6); assert.equal(r.body.overviewLang, 'fa'); ok('tv detail fields');
 assert.equal((await get('/api/title/person/1?lang=fa')).status, 404); ok('unknown type rejected');
 r = await get('/api/season/1001/2?lang=fa'); assert.equal(r.body.episodes.length, 6); ok('season episodes');

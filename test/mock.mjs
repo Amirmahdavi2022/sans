@@ -40,6 +40,12 @@ function detail(type, id) {
     credits: { cast: Array.from({ length: 8 }, (_, k) => ({ name: ['Timothée Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Javier Bardem', 'Austin Butler', 'Florence Pugh', 'Dave Bautista', 'Josh Brolin'][k], character: 'Role ' + (k + 1), profile_path: null })), crew: [{ job: 'Director', name: 'Denis Villeneuve' }] },
     recommendations: list(8, i + 1, type), similar: list(4, i + 3, type),
     status: 'Returning Series', imdb_id: 'tt0000000',
+    'watch/providers': { results: i % 2 === 0 ? {
+      US: { link: 'x', ads: [{ provider_id: 73, provider_name: 'Tubi TV', logo_path: '/p_3.svg', display_priority: 5 }, { provider_id: 538, provider_name: 'Plex', logo_path: '/p_4.svg', display_priority: 9 }],
+        free: [{ provider_id: 2303, provider_name: 'Paramount Plus Premium', logo_path: '/p_5.svg' }, { provider_id: 638, provider_name: 'Public Domain Movies', logo_path: '/p_6.svg' }],
+        flatrate: [{ provider_id: 8, provider_name: 'Netflix', logo_path: '/p_7.svg' }, { provider_id: 1825, provider_name: 'HBO Max Amazon Channel', logo_path: '/p_2.svg' }] },
+      CA: { ads: [{ provider_id: 73, provider_name: 'Tubi TV', logo_path: '/p_3.svg', display_priority: 5 }] },
+    } : { US: { flatrate: [{ provider_id: 1899, provider_name: 'HBO Max', logo_path: '/p_1.svg' }] } } },
   };
   if (type === 'tv') {
     return { ...common, episode_run_time: [52], created_by: [{ name: 'Rachel Kondo' }], seasons: [{ season_number: 1, name: 'Season 1', episode_count: 10, air_date: '2024-02-27', poster_path: null }, { season_number: 2, name: 'Season 2', episode_count: 8, air_date: '2026-03-01', poster_path: null }], last_air_date: '2026-09-30', next_episode_to_air: { season_number: 2, episode_number: 6, air_date: '2026-10-09' }, last_episode_to_air: { season_number: 2, episode_number: 5, air_date: process.env.FRESH_DATE || '2026-10-01', name: 'The Return' } };

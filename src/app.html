@@ -137,6 +137,21 @@ img{display:block}
 .ep b{font-size:13.5px;font-weight:600;display:block}
 .ep span{font-size:11.5px;color:var(--muted)}
 .next-ep{margin:0 var(--gap) 6px;padding:10px 12px;border-radius:var(--r);background:rgba(94,211,154,.08);border:1px solid rgba(94,211,154,.25);color:var(--green);font-size:13px;font-weight:600}
+.watch{margin:4px var(--gap) 6px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.watch-h{display:flex;align-items:center;gap:8px;padding:12px 14px 4px;font-weight:800;font-size:14.5px}
+.watch-h .tag{margin-inline-start:auto;font-size:11px;font-weight:700;color:var(--green);background:rgba(94,211,154,.1);border:1px solid rgba(94,211,154,.3);padding:1px 8px;border-radius:99px}
+.prov{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;text-align:start;border-top:1px solid var(--line);transition:background 160ms ease}
+.prov:first-of-type{border-top:0}
+.prov:active{background:var(--surface-2)}
+.prov img,.prov .ph{width:40px;height:40px;border-radius:10px;flex:none;background:var(--surface-2)}
+.prov b{display:block;font-size:14px;font-weight:700}
+.prov span{font-size:12px;color:var(--muted)}
+.prov .go{margin-inline-start:auto;flex:none;height:32px;padding:0 14px;border-radius:10px;background:var(--amber);color:var(--amber-ink);font-weight:800;font-size:13px;display:grid;place-items:center}
+.watch-note{padding:8px 14px 12px;font-size:11.5px;color:var(--faint);line-height:1.8}
+.subs{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.subs small{color:var(--muted);font-size:12px;margin-inline-end:4px}
+.subs img{width:28px;height:28px;border-radius:7px}
+.watch-more{display:block;width:100%;padding:11px 14px;border-top:1px solid var(--line);color:var(--amber);font-size:13px;font-weight:700;text-align:center}
 .credit{padding:22px var(--gap) calc(26px + var(--safe-b));color:var(--faint);font-size:11px;text-align:center;line-height:1.7}
 .credit b{color:var(--muted)}
 
@@ -236,6 +251,10 @@ const I = {
   fa: {
     sub: 'راهنمای فیلم و سریال', home: 'خانه', tonight: 'امشب چی؟', search: 'جستجو', list: 'لیست من',
     trending: 'داغِ امروز', now: 'تازه در سینما', onair: 'سریال‌های در حال پخش', popular: 'فیلم‌های محبوب', top: 'برترین فیلم‌ها', toptv: 'برترین سریال‌ها',
+    free: 'رایگان و قانونی ببین 🎟️',
+    whereT: 'کجا ببینم؟', freeT: 'پخش رایگان و قانونی', watchBtn: 'ببین',
+    freeNote: 'با تبلیغ پخش میشه. برای باز شدن، VPN همون کشوری که کنارش نوشته رو روشن کن. زیرنویس انگلیسی معمولاً هست.',
+    noFree: 'فعلاً پخش رایگان قانونی براش پیدا نشد.', subsT: 'با اشتراک', moreWays: 'همه‌ی راه‌های دیدن',
     trendKick: 'ترند امروز', promoT: 'امشب چی ببینم؟', promoS: 'سه تا سؤال، یه پیشنهاد درست‌وحسابی',
     movie: 'فیلم', tv: 'سریال', min: 'دقیقه', votes: 'رأی',
     want: 'می‌خوام ببینم', seen: 'دیدم', trailer: 'تریلر', follow: 'خبرم کن', share: 'بفرست', following: 'خبرت می‌کنم',
@@ -261,12 +280,16 @@ const I = {
     limit: 'به سقف لیست رسیدی', err: 'یه مشکلی پیش اومد، دوباره امتحان کن',
     joinT: 'اول عضو کانال شو', joinS: (c) => `سانس رایگانه، فقط کافیه عضو کانال ${c} باشی.`, joinBtn: 'عضویت در کانال', joined: 'عضو شدم', notYet: 'هنوز عضو نشدی 🙂',
     openTg: 'سانس رو از داخل تلگرام باز کن', openTgS: 'این صفحه فقط داخل بات تلگرام کار می‌کنه.',
-    credit: 'اطلاعات و تصاویر از TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.',
+    credit: 'اطلاعات و تصاویر از TMDB، اطلاعات پخش از JustWatch. This product uses the TMDB API but is not endorsed or certified by TMDB.',
     shareText: (t) => `🎬 «${t}» رو تو سانس ببین`,
   },
   en: {
     sub: 'Movie & series guide', home: 'Home', tonight: 'Tonight', search: 'Search', list: 'My list',
     trending: 'Trending today', now: 'In theaters', onair: 'Airing now', popular: 'Popular movies', top: 'Top rated movies', toptv: 'Top rated series',
+    free: 'Watch free & legal 🎟️',
+    whereT: 'Where to watch', freeT: 'Free & legal streaming', watchBtn: 'Watch',
+    freeNote: 'Ad-supported. Turn on a VPN for the country shown next to it. English subtitles are usually available.',
+    noFree: 'No free legal stream found for this one yet.', subsT: 'With a subscription', moreWays: 'All ways to watch',
     trendKick: 'Trending', promoT: 'What should I watch tonight?', promoS: 'Three quick questions, one great pick',
     movie: 'Movie', tv: 'Series', min: 'min', votes: 'votes',
     want: 'Watchlist', seen: 'Seen it', trailer: 'Trailer', follow: 'Notify me', share: 'Share', following: 'Notifying',
@@ -292,7 +315,7 @@ const I = {
     limit: 'List limit reached', err: 'Something went wrong, try again',
     joinT: 'Join the channel first', joinS: (c) => `Sans is free. You just need to be a member of ${c}.`, joinBtn: 'Join the channel', joined: 'I joined', notYet: "You haven't joined yet 🙂",
     openTg: 'Open Sans inside Telegram', openTgS: 'This page only works inside the Telegram bot.',
-    credit: 'Data and images from TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.',
+    credit: 'Data and images from TMDB, streaming data from JustWatch. This product uses the TMDB API but is not endorsed or certified by TMDB.',
     shareText: (t) => `🎬 Check out "${t}" on Sans`,
   },
 };
@@ -429,7 +452,7 @@ async function renderHome() {
       <div class="slide-body"><div class="slide-kicker">${ic.spark.replace('<svg', '<svg width="13" height="13"')} ${t('trendKick')} · ${typeLabel(c.type)}</div>
       <div class="slide-title">${esc(c.title)}</div>
       <div class="slide-meta">${c.rating ? `<span class="star">${ic.star}${dec(c.rating)}</span>` : ''}${c.year ? `<span>${yr(c.year)}</span>` : ''}</div></div></button>`).join('');
-  const titles = { trending: t('trending'), now: t('now'), onair: t('onair'), popular: t('popular'), top: t('top'), toptv: t('toptv') };
+  const titles = { free: t('free'), trending: t('trending'), now: t('now'), onair: t('onair'), popular: t('popular'), top: t('top'), toptv: t('toptv') };
   v.innerHTML = head
     + `<div class="hero" id="hero">${hero}</div><div class="dots" id="dots">${data.hero.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>`
     + `<button class="promo press" data-tab="tonight"><div class="promo-ico">🍿</div><div><b>${t('promoT')}</b><span>${t('promoS')}</span></div><span class="go">${ic.arrow}</span></button>`
@@ -472,6 +495,15 @@ function closeDetail() {
   if (location.hash.startsWith('#/t/')) history.replaceState(null, '', '#/' + (state.tab === 'home' ? '' : state.tab));
   return true;
 }
+const flag = (cc) => String.fromCodePoint(...[...cc].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
+function watchHtml(w) {
+  if (!w || (!w.free.length && !w.subs.length)) return '';
+  const free = w.free.length
+    ? w.free.map((p) => `<button class="prov" data-link="${esc(p.url)}">${p.logo ? `<img class="fade" loading="lazy" alt="" src="${img(p.logo, 'w92')}">` : '<span class="ph"></span>'}<div><b>${esc(p.name)}</b><span>${p.regions.slice(0, 4).map(flag).join(' ')} ${p.regions.slice(0, 4).join(' · ')}</span></div><span class="go">${t('watchBtn')}</span></button>`).join('') + `<div class="watch-note">${t('freeNote')}</div>`
+    : `<div class="watch-note" style="padding-top:2px">${t('noFree')}</div>`;
+  const subs = w.subs.length ? `<div class="subs"><small>${t('subsT')}${w.subsRegion ? ' ' + flag(w.subsRegion) : ''}</small>${w.subs.map((p) => p.logo ? `<img class="fade" loading="lazy" alt="${esc(p.name)}" title="${esc(p.name)}" src="${img(p.logo, 'w92')}">` : `<span class="pill">${esc(p.name)}</span>`).join('')}</div>` : '';
+  return `<div class="watch"><div class="watch-h">🍿 ${t('whereT')}${w.free.length ? `<span class="tag">${t('freeT')}</span>` : ''}</div>${free}${subs}<button class="watch-more" data-link="${esc(w.more)}">${t('moreWays')} ↗</button></div>`;
+}
 function actHtml(key, icon, label, on, extra = '') {
   return `<button class="act${on ? ' on' : ''}" data-act="${key}" ${extra}>${icon}<span>${label}</span></button>`;
 }
@@ -490,6 +522,7 @@ function detailHtml(d) {
     ${actHtml('share', ic.share, t('share'), false)}
   </div>
   ${d.type === 'tv' && d.trailer ? `<div style="padding:0 var(--gap) 6px"><button class="btn ghost" style="width:100%;height:44px" data-act="trailer">${ic.play.replace('<svg', '<svg width="18" height="18"')}${t('trailer')}</button></div>` : ''}
+  ${watchHtml(d.watch)}
   ${d.nextEpisode ? `<div class="next-ep">📅 ${t('nextEp', num(d.nextEpisode.season), num(d.nextEpisode.episode), fmtDate(d.nextEpisode.date))}</div>` : ''}
   ${d.overview ? `<div class="sec"><h4>${t('story')}</h4>${d.tagline ? `<div style="color:var(--amber-2);font-size:13.5px;margin-bottom:6px;font-weight:600">${esc(d.tagline)}</div>` : ''}<p class="overview" dir="${d.overviewLang === 'en' ? 'ltr' : 'auto'}">${esc(d.overview)}</p>${d.overviewLang === 'en' && lang === 'fa' ? `<div class="note">${t('faMissing')}</div>` : ''}${people}</div>` : (people ? `<div class="sec">${people}</div>` : '')}
   ${d.cast.length ? `<div class="sec"><h4>${t('cast')}</h4></div><div class="cast">${d.cast.map((p) => `<div class="person"><div class="ph">${p.photo ? `<img class="fade" loading="lazy" alt="" src="${img(p.photo, 'w185')}">` : ''}</div><b>${esc(p.name)}</b><span>${esc(p.role)}</span></div>`).join('')}</div>` : ''}
@@ -737,6 +770,7 @@ document.addEventListener('click', async (e) => {
   if (ds.tab) { hap('sel'); if (document.getElementById('sheet').classList.contains('open')) closeDetail(); return go(ds.tab); }
   if (ds.open) { const [ty, id] = ds.open.split('/'); hap('light'); history.replaceState(null, '', `#/t/${ty}/${id}`); return openDetail(ty, Number(id)); }
   if (ds.close !== undefined) return closeDetail();
+  if (ds.link) { hap('light'); return openLink(ds.link); }
   if (ds.act) { const d = document.getElementById('sheet')._d; if (d && !el.disabled) doAction(ds.act, d, el); return; }
   if (ds.seasonToggle) return toggleSeason(el, Number(ds.seasonToggle));
   if (ds.lang !== undefined) {
