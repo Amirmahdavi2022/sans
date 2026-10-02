@@ -28,6 +28,8 @@ jobs:
         run: npm test 2>&1 | tee test-report.txt
       - name: Save report
         if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: bash scripts/save-report.sh test test-report.txt
 
   deploy:
@@ -96,4 +98,6 @@ jobs:
 
       - name: Save report
         if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: bash scripts/save-report.sh deploy deploy-report.txt
